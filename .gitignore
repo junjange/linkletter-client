@@ -1,0 +1,78 @@
+# --- Gradle ---
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Kotlin ---
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+local.properties
+
+# --- Android ---
+/captures/
+/.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+
+# Keystore, signing configs
+*.jks
+*.keystore
+*.properties
+
+# Android Studio auto files
+*.hprof
+*.DS_Store
+
+# --- Compose Multiplatform Specific ---
+/.compose-cache/
+/.skiko/
+*.skiko.js.map
+*.skiko.wasm
+*.skiko.js
+*.js.map
+*.js
+*.wasm
+
+# --- Kotlin Native ---
+/.konan/
+*.klib
+*.dSYM
+*.kexe
+*.kjsm
+*.node
+
+
+# --- iOS / Xcode ---
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcresult
+
+# Xcode workspace data
+project.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# XCFramework & simulator artifacts
+*.framework/
+*.xcframework/
+*.a
+*.dylib
+
+# --- OS & Editor junk ---
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
