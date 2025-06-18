@@ -23,7 +23,6 @@ fun MainBottomBar(
 ) {
     Surface(
         modifier = modifier,
-        color = LinkletterTheme.colorScheme.surface,
         border = BorderStroke(1.dp, LinkletterTheme.colorScheme.borderColor),
     ) {
         NavigationBar(

@@ -24,6 +24,17 @@ val NeutralGray = Color(0xFFF1F1F1)
 val Black = Color(0xFF000000)
 val Graphite = Color(0xFF292929)
 
+val Gray900 = Color(0xFF212121)
+val Gray800 = Color(0xFF424242)
+val Gray700 = Color(0xFF616161)
+val Gray600 = Color(0xFF757575)
+val Gray500 = Color(0xFF9E9E9E)
+val Gray400 = Color(0xFFBDBDBD)
+val Gray300 = Color(0xFFE0E0E0)
+val Gray200 = Color(0xFFEEEEEE)
+val Gray100 = Color(0xFFF5F5F5)
+val Gray50 = Color(0xFF7F7F7F)
+
 @Immutable
 data class LinkletterColorScheme(
     val primary: Color,
@@ -68,8 +79,8 @@ data class LinkletterColorScheme(
                 neutralSurface = DarkGray,
                 onNeutralSurface = LightGray,
                 borderColor = LightGray,
-                selectedIconColor = Blue02,
-                unselectedIconColor = LightGray,
+                selectedIconColor = Black,
+                unselectedIconColor = Gray400,
                 iconBackground = NeutralGray,
                 placeholderColor = LightGray,
             )
@@ -91,8 +102,8 @@ data class LinkletterColorScheme(
                 neutralSurface = DarkGray,
                 onNeutralSurface = LightGray,
                 borderColor = DarkGray,
-                selectedIconColor = Blue01,
-                unselectedIconColor = DarkGray,
+                selectedIconColor = White,
+                unselectedIconColor = Gray700,
                 iconBackground = Graphite,
                 placeholderColor = DarkGray,
             )
