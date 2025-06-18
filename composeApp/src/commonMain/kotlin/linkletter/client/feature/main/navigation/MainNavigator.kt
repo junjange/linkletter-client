@@ -62,7 +62,7 @@ class MainNavigator(
 }
 
 @Composable
-internal fun rememberMainNavigator(navController: NavHostController = rememberNavController()): MainNavigator =
+fun rememberMainNavigator(navController: NavHostController = rememberNavController()): MainNavigator =
     remember(navController) {
         MainNavigator(navController)
     }
