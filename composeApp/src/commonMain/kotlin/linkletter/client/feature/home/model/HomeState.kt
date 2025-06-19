@@ -4,14 +4,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 
 @Stable
-sealed interface HomeUiState {
+sealed interface HomeState {
     @Immutable
-    data object Loading : HomeUiState
+    data object Loading : HomeState
 
     @Immutable
     data class Feed(
         val posts: List<Post>,
-    ) : HomeUiState {
+    ) : HomeState {
         @Immutable
         data class Post(
             val author: Author,
