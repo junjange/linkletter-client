@@ -1,7 +1,6 @@
 package linkletter.client.feature.home.componets
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -75,7 +74,7 @@ fun HomeSearchBar(
                 },
             ),
         singleLine = true,
-        modifier = modifier.fillMaxWidth().padding(16.dp),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors =
             TextFieldDefaults.colors(
