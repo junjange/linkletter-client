@@ -45,11 +45,29 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.coil)
+            implementation(libs.coil.network)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel.navigation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        appleMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
         }
     }
 }

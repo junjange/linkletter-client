@@ -207,7 +207,7 @@ data class LinkletterTypography(
     }
 }
 
-internal val LocalTypography =
+val LocalTypography =
     staticCompositionLocalOf<LinkletterTypography> {
         error("Linkletter를 provide 해야합니다.")
     }

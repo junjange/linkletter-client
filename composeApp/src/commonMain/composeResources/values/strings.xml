@@ -1,0 +1,5 @@
+<resources>
+    <!--Home Screen-->
+    <string name="hint_search">무슨 글을 읽어볼래요?</string>
+    <string name="by">by </string>
+</resources>
