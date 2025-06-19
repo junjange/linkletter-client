@@ -19,6 +19,7 @@ koin = "4.1.0-RC1"
 coil = "3.2.0"
 ktor = "3.1.3"
 
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -49,7 +50,6 @@ coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", versio
 # Ktor
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }  # ios
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" } # android, jvm
-
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

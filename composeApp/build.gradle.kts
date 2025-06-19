@@ -47,8 +47,6 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel.navigation)
-            implementation(libs.coil)
-            implementation(libs.coil.network)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
