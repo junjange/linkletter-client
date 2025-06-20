@@ -1,22 +1,24 @@
 [versions]
 agp = "8.8.0"
 versionCode = "1"
-android-compileSdk = "35"
-android-minSdk = "24"
-android-targetSdk = "35"
-androidx-lifecycle = "2.9.0"
-composeMultiplatform = "1.8.1"
-junit = "4.13.2"
+versionName = "1.0.0"
+
+compileSdk = "35"
+targetSdk = "35"
+minSdk = "24"
+
 kotlin = "2.1.21"
 coroutines = "1.9.0"
 
-kotlinx-datetime = "0.6.2"
+kotlinx-datetime = "0.6.1"
 kotlinx-serialization = "1.8.1"
 
-androidx-activity-compose = "1.10.1"
+androidx-activity-compose = "1.10.0"
+androidx-lifecycle = "2.9.0"
 desugar = "2.1.4"
 
-compose = "1.8.1"
+composeMultiplatform = "1.8.1"
+compose = "1.7.1"
 navigation = "2.9.0-beta02"
 
 koin = "4.1.0-RC1"

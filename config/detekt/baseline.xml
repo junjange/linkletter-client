@@ -1,4 +1,4 @@
-<!--<SmellBaseline>-->
-<!--    <SuppressedFalsePositive></SuppressedFalsePositive>-->
-<!--    <TemporarySuppressedIssues></TemporarySuppressedIssues>-->
-<!--</SmellBaseline>-->
+<SmellBaseline>
+    <SuppressedFalsePositive></SuppressedFalsePositive>
+    <TemporarySuppressedIssues></TemporarySuppressedIssues>
+</SmellBaseline>
