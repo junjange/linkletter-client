@@ -1,113 +1,57 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinxSerialization)
+    id("linkletter.client.convention.lint")
+    id("linkletter.client.convention.kmp")
+    id("linkletter.client.convention.kmp.compose")
+    id("linkletter.client.convention.kmp.ios")
+    id("linkletter.client.convention.android.application")
 }
+
+android.namespace = "linkletter.client"
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    targets.filterIsInstance<KotlinNativeTarget>().forEach {
+        it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            binaryOption("bundleId", "linkletter.client")
+            binaryOption("bundleVersion", version.toString())
         }
     }
 
     sourceSets {
-
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-        }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.androidx.navigation.compose)
-            implementation(libs.coil)
-            implementation(libs.coil.network)
+            implementation(projects.core.model)
+
+            implementation(projects.core.data)
+
+            implementation(projects.core.designsystem)
+
+            implementation(projects.core.network)
+
+            implementation(projects.feature.main)
+            implementation(projects.feature.home)
+            implementation(projects.feature.bookmark)
+
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel.navigation)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.lifecycle.compose)
         }
-
         appleMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }
         }
-        androidMain {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
     }
-}
-
-android {
-    namespace = "linkletter.client"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
-
-    defaultConfig {
-        applicationId = "linkletter.client"
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
-        targetSdk =
-            libs.versions.android.targetSdk
-                .get()
-                .toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
 }
