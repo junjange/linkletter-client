@@ -16,7 +16,6 @@ kotlin {
             api(projects.core.network)
 
             implementation(libs.kotlinx.datetime)
-            implementation(libs.ktor.client.auth)
             implementation(libs.koin.core)
         }
     }
