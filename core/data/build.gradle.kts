@@ -14,8 +14,10 @@ kotlin {
             api(projects.core.database)
             api(projects.core.datastore)
             api(projects.core.network)
+            api(projects.core.domain)
 
-            implementation(libs.kotlinx.datetime)
+            implementation(libs.coroutines.core)
+            implementation(libs.ksoup)
             implementation(libs.koin.core)
         }
     }
