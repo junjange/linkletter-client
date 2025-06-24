@@ -26,6 +26,14 @@ internal val appModule =
         )
 
         includes(
+            coreDataModule,
+        )
+
+        includes(
+            coreDomainModule,
+        )
+
+        includes(
             featureHomeModule,
             featureBookmarkModule,
         )

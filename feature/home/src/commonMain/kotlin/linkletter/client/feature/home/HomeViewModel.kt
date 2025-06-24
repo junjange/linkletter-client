@@ -5,13 +5,20 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import linkletter.client.core.common.formatRssDateToKorean
+import linkletter.client.core.domain.usecase.GetPostsUseCase
 import linkletter.client.feature.home.model.HomeEffect
 import linkletter.client.feature.home.model.HomeEvent
 import linkletter.client.feature.home.model.HomeState
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val getPostsUseCase: GetPostsUseCase,
+) : ViewModel() {
     private val _state = MutableStateFlow<HomeState>(HomeState.Loading)
     val state = _state.asStateFlow()
 
@@ -29,7 +36,16 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun fetchFeed() {
-        _state.value = HomeState.Feed.Dummy
+        getPostsUseCase(url = "https://fre2-dom.tistory.com/")
+            .onEach { posts ->
+                val newPosts =
+                    posts.map { post ->
+                        post.copy(pubDate = post.pubDate.formatRssDateToKorean())
+                    }
+                _state.value = HomeState.Feed(newPosts)
+            }.catch {
+                // TODO 에러
+            }.launchIn(viewModelScope)
     }
 
     private fun openUri(link: String) {
