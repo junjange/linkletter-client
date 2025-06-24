@@ -10,6 +10,7 @@ android.namespace = "linkletter.client.core.common"
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.kotlinx.datetime)
         }
     }
 }

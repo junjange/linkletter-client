@@ -48,10 +48,5 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.lifecycle.compose)
         }
-        appleMain {
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
-        }
     }
 }

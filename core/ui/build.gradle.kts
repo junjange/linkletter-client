@@ -16,9 +16,6 @@ kotlin {
 
             implementation(libs.coil)
             implementation(libs.coil.network)
-
-            implementation(libs.ktor.client)
-            implementation(libs.ktor.client.auth)
         }
     }
 }

@@ -5,19 +5,13 @@ plugins {
     id("linkletter.client.convention.kmp.ios")
 }
 
-android.namespace = "linkletter.client.core.data"
+android.namespace = "linkletter.client.core.domain"
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(projects.core.common)
-            api(projects.core.database)
-            api(projects.core.datastore)
-            api(projects.core.network)
-            api(projects.core.domain)
-
+            implementation(projects.core.model)
             implementation(libs.coroutines.core)
-            implementation(libs.ksoup)
             implementation(libs.koin.core)
         }
     }

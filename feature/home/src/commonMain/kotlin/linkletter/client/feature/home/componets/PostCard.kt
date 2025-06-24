@@ -22,14 +22,15 @@ import androidx.compose.ui.unit.dp
 import linkletter.client.core.designsystem.components.NetworkImage
 import linkletter.client.core.designsystem.theme.Gray500
 import linkletter.client.core.designsystem.theme.LinkletterTheme
-import linkletter.client.feature.home.model.HomeState
+import linkletter.client.core.model.Author
+import linkletter.client.core.model.Post
 import linkletter_client.core.designsystem.generated.resources.Res
 import linkletter_client.core.designsystem.generated.resources.by
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PostCard(
-    post: HomeState.Feed.Post,
+    post: Post,
     showPlaceholder: Boolean,
     modifier: Modifier = Modifier,
     onClick: (link: String) -> Unit = {},
@@ -88,7 +89,7 @@ private fun ThumbnailImage(
 
 @Composable
 private fun PostContent(
-    post: HomeState.Feed.Post,
+    post: Post,
     shimmerModifier: Modifier,
     modifier: Modifier = Modifier,
 ) {
@@ -134,7 +135,7 @@ private fun PostContent(
 
 @Composable
 private fun AuthorRow(
-    author: HomeState.Feed.Author,
+    author: Author,
     shimmerModifier: Modifier,
     modifier: Modifier = Modifier,
 ) {

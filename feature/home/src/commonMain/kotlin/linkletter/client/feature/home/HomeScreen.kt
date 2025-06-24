@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import linkletter.client.core.designsystem.utils.addFocusCleaner
+import linkletter.client.core.model.Post
 import linkletter.client.feature.home.componets.HomeSearchBar
 import linkletter.client.feature.home.componets.PostCard
 import linkletter.client.feature.home.model.HomeEffect
@@ -75,7 +76,7 @@ private fun PostList(
             is HomeState.Loading -> {
                 items(SHIMMERING_ITEM_COUNT) {
                     PostCard(
-                        post = HomeState.Feed.Post.Default,
+                        post = Post.Default,
                         showPlaceholder = true,
                         modifier = Modifier.padding(horizontal = 16.dp),
                     )

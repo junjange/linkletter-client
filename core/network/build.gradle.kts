@@ -4,7 +4,6 @@ plugins {
     id("linkletter.client.convention.kmp.android")
     id("linkletter.client.convention.kmp.ios")
     id("linkletter.client.convention.kotlin.serialization")
-    id("linkletter.client.convention.ktorfit")
 }
 
 android.namespace = "linkletter.client.core.network"
@@ -20,7 +19,7 @@ kotlin {
             implementation(libs.koin.core)
         }
         androidMain.dependencies {
-            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
