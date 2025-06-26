@@ -36,7 +36,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
-    onBlogAddClick: () -> Unit,
+    onBlogFollowClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -47,7 +47,7 @@ fun HomeScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is HomeEffect.OpenUri -> uriHandler.openUri(effect.link)
-                is HomeEffect.NavigateToAddBlog -> onBlogAddClick()
+                is HomeEffect.NavigateToAddBlog -> onBlogFollowClick()
             }
         }
     }

@@ -11,8 +11,8 @@ fun NavController.navigateHome(navOptions: NavOptions) {
     navigate(MainTabRoute.Home, navOptions)
 }
 
-fun NavGraphBuilder.homeNavGraph(onBlogAddClick: () -> Unit) {
+fun NavGraphBuilder.homeNavGraph(onBlogFollowClick: () -> Unit) {
     composable<MainTabRoute.Home> {
-        HomeScreen(onBlogAddClick = onBlogAddClick)
+        HomeScreen(onBlogFollowClick = onBlogFollowClick)
     }
 }
