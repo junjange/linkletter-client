@@ -29,7 +29,7 @@ import linkletter_client.core.designsystem.generated.resources.by
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun PostCard(
+internal fun PostCard(
     post: Post,
     showPlaceholder: Boolean,
     modifier: Modifier = Modifier,

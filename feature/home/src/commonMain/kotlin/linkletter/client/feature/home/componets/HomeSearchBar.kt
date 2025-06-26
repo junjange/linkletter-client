@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HomeSearchBar(
+internal fun HomeSearchBar(
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
     onSearch: (String) -> Unit,

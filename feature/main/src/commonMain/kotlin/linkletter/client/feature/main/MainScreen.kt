@@ -2,8 +2,6 @@ package linkletter.client.feature.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,23 +21,39 @@ fun MainContent(
     modifier: Modifier = Modifier,
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
-    Scaffold(
+//    Scaffold(
+//        modifier = modifier.fillMaxSize(),
+//        containerColor = LinkletterTheme.colorScheme.background,
+//        bottomBar = {
+//            MainBottomBar(
+//                visible = navigator.shouldShowBottomBar(),
+//                currentTab = navigator.currentTab,
+//                onTabSelected = { navigator.navigate(it) },
+//            )
+//        },
+//    ) { innerPadding ->
+//        Surface(
+//            modifier = modifier.fillMaxSize().padding(innerPadding),
+//            color = LinkletterTheme.colorScheme.background,
+//        ) {
+//            Box(modifier = Modifier.fillMaxSize()) {
+//                MainNavHost(navigator)
+//            }
+//        }
+//    }
+
+    Surface(
         modifier = modifier.fillMaxSize(),
-        containerColor = LinkletterTheme.colorScheme.background,
-        bottomBar = {
+        color = LinkletterTheme.colorScheme.background,
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            MainNavHost(navigator)
+
             MainBottomBar(
+                visible = navigator.shouldShowBottomBar(),
                 currentTab = navigator.currentTab,
                 onTabSelected = { navigator.navigate(it) },
             )
-        },
-    ) { innerPadding ->
-        Surface(
-            modifier = modifier.fillMaxSize().padding(innerPadding),
-            color = LinkletterTheme.colorScheme.background,
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                MainNavHost(navigator)
-            }
         }
     }
 }

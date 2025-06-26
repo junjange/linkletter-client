@@ -4,4 +4,6 @@ sealed interface HomeEffect {
     data class OpenUri(
         val link: String,
     ) : HomeEffect
+
+    data object NavigateToAddBlog : HomeEffect
 }

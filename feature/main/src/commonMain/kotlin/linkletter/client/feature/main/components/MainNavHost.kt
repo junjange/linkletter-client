@@ -19,7 +19,9 @@ fun MainNavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
     ) {
-        homeNavGraph()
+        homeNavGraph(
+            onBlogAddClick = navigator::navigateBlogAdd,
+        )
         bookmarkNavGraph()
         blogAddNavGraph(
             onBackClick = navigator::popBackStackIfNotHome,
