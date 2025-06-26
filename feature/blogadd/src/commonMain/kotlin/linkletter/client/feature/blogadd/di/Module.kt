@@ -1,6 +1,6 @@
 package linkletter.client.feature.blogadd.di
 
-import linkletter.client.feature.bookmark.BlogAddViewModel
+import linkletter.client.feature.blogadd.BlogAddViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

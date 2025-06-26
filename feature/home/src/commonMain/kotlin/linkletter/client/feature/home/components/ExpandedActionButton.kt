@@ -17,8 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import linkletter.client.core.designsystem.theme.LinkletterTheme
-import linkletter_client.core.designsystem.generated.resources.Res
-import linkletter_client.core.designsystem.generated.resources.blog_add_fab_title
+import linkletter_client.feature.home.generated.resources.blog_add_fab_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -48,7 +47,7 @@ internal fun ExpandableActionButton(
 
             AnimatedVisibility(visible = isFabExpanded) {
                 Text(
-                    text = stringResource(Res.string.blog_add_fab_title),
+                    text = stringResource(linkletter_client.feature.home.generated.resources.Res.string.blog_add_fab_title),
                     style = LinkletterTheme.typography.titleMediumB,
                     color = LinkletterTheme.colorScheme.onPrimary,
                 )

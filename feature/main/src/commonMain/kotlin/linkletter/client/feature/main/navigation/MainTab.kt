@@ -3,9 +3,9 @@ package linkletter.client.feature.main.navigation
 import androidx.compose.runtime.Composable
 import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
-import linkletter_client.core.designsystem.generated.resources.Res
-import linkletter_client.core.designsystem.generated.resources.ic_bookmark
-import linkletter_client.core.designsystem.generated.resources.ic_home
+import linkletter_client.feature.main.generated.resources.Res
+import linkletter_client.feature.main.generated.resources.ic_bookmark
+import linkletter_client.feature.main.generated.resources.ic_home
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class MainTab(
