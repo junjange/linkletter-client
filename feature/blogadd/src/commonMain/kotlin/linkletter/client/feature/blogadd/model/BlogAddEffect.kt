@@ -6,4 +6,8 @@ sealed interface BlogAddEffect {
     data class OpenUri(
         val link: String,
     ) : BlogAddEffect
+
+    data class ShowMessage(
+        val message: BlogAddMessage,
+    ) : BlogAddEffect
 }

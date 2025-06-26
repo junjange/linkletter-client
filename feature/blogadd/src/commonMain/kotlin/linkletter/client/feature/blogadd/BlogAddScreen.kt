@@ -1,19 +1,28 @@
 package linkletter.client.feature.blogadd
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.designsystem.utils.addFocusCleaner
 import linkletter.client.feature.blogadd.components.BlogAddSearchBar
@@ -32,20 +41,29 @@ fun BlogAddScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val snackbarHostState = remember { SnackbarHostState() }
     val focusManager = LocalFocusManager.current
     val uriHandler = LocalUriHandler.current
+    val imeInsets = WindowInsets.ime
 
     LaunchedEffect(Unit) {
-        viewModel.effect.collect { effect ->
+        viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is BlogAddEffect.NavigateBack -> onBackClick()
                 is BlogAddEffect.OpenUri -> uriHandler.openUri(effect.link)
+                is BlogAddEffect.ShowMessage -> {
+                    snackbarHostState.showSnackbar(
+                        message = effect.message.value,
+                        duration = SnackbarDuration.Short,
+                    )
+                }
             }
         }
     }
 
     Scaffold(
         containerColor = LinkletterTheme.colorScheme.background,
+        contentWindowInsets = WindowInsets.systemBars,
         modifier =
             modifier
                 .systemBarsPadding()
@@ -64,6 +82,15 @@ fun BlogAddScreen(
                 },
             )
         },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier =
+                    Modifier.padding(
+                        paddingValues = imeInsets.asPaddingValues(),
+                    ),
+            )
+        },
     ) { innerPadding ->
         BlogAddContent(
             modifier =
@@ -78,6 +105,7 @@ fun BlogAddScreen(
             },
             onBlogFollow = { blog ->
                 viewModel.onEvent(event = BlogAddEvent.BlogFollowToggleClicked(blog = blog))
+                focusManager.clearFocus()
             },
         )
     }

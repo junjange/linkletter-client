@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import linkletter.client.feature.blogadd.model.Blog
 import linkletter.client.feature.blogadd.model.BlogAddEffect
 import linkletter.client.feature.blogadd.model.BlogAddEvent
+import linkletter.client.feature.blogadd.model.BlogAddMessage
 import linkletter.client.feature.blogadd.model.BlogAddState
 
 class BlogAddViewModel : ViewModel() {
@@ -51,13 +52,16 @@ class BlogAddViewModel : ViewModel() {
         viewModelScope.launch {
             val blogs =
                 state.value.blogList.map {
-                    if (it == blog) {
+                    if (it.id == blog.id) {
                         it.copy(isFollowed = !it.isFollowed)
                     } else {
                         it
                     }
                 }
 
+            if (!blog.isFollowed) {
+                _effect.send(BlogAddEffect.ShowMessage(BlogAddMessage.BlogFollowed(blog = blog)))
+            }
             _state.value = state.value.copy(blogList = blogs)
         }
     }
