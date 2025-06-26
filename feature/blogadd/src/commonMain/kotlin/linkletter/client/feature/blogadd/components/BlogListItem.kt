@@ -20,9 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import linkletter.client.core.designsystem.components.NetworkImage
+import linkletter.client.core.designsystem.theme.Gray500
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.feature.blogadd.model.Blog
 
@@ -53,18 +53,18 @@ internal fun BlogListItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = blog.name,
-                style = LinkletterTheme.typography.titleMediumR,
+                style = LinkletterTheme.typography.titleMediumR.copy(color = LinkletterTheme.colorScheme.onSurface),
             )
 
             Text(
                 text = blog.link,
-                style = LinkletterTheme.typography.titleSmallR,
-                color = Color.Gray,
+                style = LinkletterTheme.typography.titleSmallR.copy(color = Gray500),
             )
         }
         IconButton(onClick = { onFollow(blog) }) {
             Icon(
                 imageVector = if (blog.isFollowed) Icons.Default.Check else Icons.Default.Add,
+                tint = if (blog.isFollowed) LinkletterTheme.colorScheme.primarySurface else LinkletterTheme.colorScheme.onSurface,
                 contentDescription = null,
             )
         }
