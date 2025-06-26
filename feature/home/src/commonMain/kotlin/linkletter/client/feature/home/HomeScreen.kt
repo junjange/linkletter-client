@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.designsystem.utils.addFocusCleaner
-import linkletter.client.feature.home.componets.ExpandableActionButton
-import linkletter.client.feature.home.componets.HomeSearchBar
-import linkletter.client.feature.home.componets.PostList
+import linkletter.client.feature.home.components.ExpandableActionButton
+import linkletter.client.feature.home.components.HomeSearchBar
+import linkletter.client.feature.home.components.PostList
 import linkletter.client.feature.home.model.HomeEffect
 import linkletter.client.feature.home.model.HomeEvent
 import linkletter.client.feature.home.model.HomeState

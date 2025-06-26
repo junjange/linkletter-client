@@ -1,4 +1,4 @@
-package linkletter.client.feature.home.componets
+package linkletter.client.feature.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
