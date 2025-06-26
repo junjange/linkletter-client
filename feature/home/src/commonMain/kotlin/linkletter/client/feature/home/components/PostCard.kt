@@ -1,4 +1,4 @@
-package linkletter.client.feature.home.componets
+package linkletter.client.feature.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,12 +24,12 @@ import linkletter.client.core.designsystem.theme.Gray500
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.model.Author
 import linkletter.client.core.model.Post
-import linkletter_client.core.designsystem.generated.resources.Res
-import linkletter_client.core.designsystem.generated.resources.by
+import linkletter_client.feature.home.generated.resources.Res
+import linkletter_client.feature.home.generated.resources.by
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun PostCard(
+internal fun PostCard(
     post: Post,
     showPlaceholder: Boolean,
     modifier: Modifier = Modifier,

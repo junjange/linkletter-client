@@ -64,7 +64,7 @@ data class LinkletterColorScheme(
     companion object {
         val lightColorScheme =
             LinkletterColorScheme(
-                primary = Blue02,
+                primary = Blue01,
                 onPrimary = White,
                 background = PaleGray,
                 onBackground = Black,

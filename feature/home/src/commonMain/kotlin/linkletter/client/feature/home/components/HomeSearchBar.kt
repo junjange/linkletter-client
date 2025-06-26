@@ -1,4 +1,4 @@
-package linkletter.client.feature.home.componets
+package linkletter.client.feature.home.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,15 +20,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import linkletter.client.core.designsystem.theme.LinkletterTheme
-import linkletter_client.core.designsystem.generated.resources.Res
-import linkletter_client.core.designsystem.generated.resources.hint_search
-import linkletter_client.core.designsystem.generated.resources.ic_cancel
-import linkletter_client.core.designsystem.generated.resources.ic_search
+import linkletter_client.feature.home.generated.resources.Res
+import linkletter_client.feature.home.generated.resources.hint_search
+import linkletter_client.feature.home.generated.resources.ic_cancel
+import linkletter_client.feature.home.generated.resources.ic_search
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun HomeSearchBar(
+internal fun HomeSearchBar(
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
     onSearch: (String) -> Unit,

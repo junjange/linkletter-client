@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.domain)
             implementation(projects.core.navigation)
+            implementation(projects.core.designsystem)
 
             implementation(libs.navigation.compose)
 

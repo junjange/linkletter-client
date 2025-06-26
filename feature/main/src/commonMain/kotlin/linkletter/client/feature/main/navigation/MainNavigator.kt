@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
+import linkletter.client.feature.blogfollow.navigation.navigateBlogFollow
 import linkletter.client.feature.bookmark.navigation.navigateBookmark
 import linkletter.client.feature.home.navigation.navigateHome
 
@@ -52,6 +53,10 @@ class MainNavigator(
         navController.popBackStack()
     }
 
+    fun navigateBlogFollow() {
+        navController.navigateBlogFollow()
+    }
+
     fun popBackStackIfNotHome() {
         if (!isSameCurrentDestination<MainTabRoute.Home>()) {
             popBackStack()
@@ -59,6 +64,12 @@ class MainNavigator(
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean = navController.currentDestination?.hasRoute<T>() == true
+
+    @Composable
+    fun shouldShowBottomBar() =
+        MainTab.contains {
+            currentDestination?.hasRoute(it::class) == true
+        }
 }
 
 @Composable

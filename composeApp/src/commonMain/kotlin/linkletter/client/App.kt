@@ -5,6 +5,7 @@ import linkletter.client.core.data.di.coreDataModule
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.domain.di.coreDomainModule
 import linkletter.client.core.network.di.coreNetworkModule
+import linkletter.client.feature.blogfollow.di.featureBlogFollowModule
 import linkletter.client.feature.bookmark.di.featureBookmarkModule
 import linkletter.client.feature.home.di.featureHomeModule
 import linkletter.client.feature.main.MainScreen
@@ -36,6 +37,7 @@ internal val appModule =
         includes(
             featureHomeModule,
             featureBookmarkModule,
+            featureBlogFollowModule,
         )
     }
 

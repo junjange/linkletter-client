@@ -4,4 +4,6 @@ sealed interface HomeEvent {
     data class PostClicked(
         val link: String,
     ) : HomeEvent
+
+    data object AddBlogClicked : HomeEvent
 }

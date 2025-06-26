@@ -32,6 +32,7 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.PostClicked -> openUri(event.link)
+            is HomeEvent.AddBlogClicked -> navigateToAddBlog()
         }
     }
 
@@ -46,6 +47,12 @@ class HomeViewModel(
             }.catch {
                 // TODO 에러
             }.launchIn(viewModelScope)
+    }
+
+    private fun navigateToAddBlog() {
+        viewModelScope.launch {
+            _effect.send(HomeEffect.NavigateToAddBlog)
+        }
     }
 
     private fun openUri(link: String) {

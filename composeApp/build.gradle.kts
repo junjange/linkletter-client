@@ -39,6 +39,7 @@ kotlin {
             implementation(projects.feature.main)
             implementation(projects.feature.home)
             implementation(projects.feature.bookmark)
+            implementation(projects.feature.blogfollow)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
