@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import linkletter.client.feature.blogadd.navigation.blogAddNavGraph
 import linkletter.client.feature.bookmark.navigation.bookmarkNavGraph
 import linkletter.client.feature.home.navigation.homeNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
@@ -20,5 +21,8 @@ fun MainNavHost(
     ) {
         homeNavGraph()
         bookmarkNavGraph()
+        blogAddNavGraph(
+            onBackClick = navigator::popBackStackIfNotHome,
+        )
     }
 }

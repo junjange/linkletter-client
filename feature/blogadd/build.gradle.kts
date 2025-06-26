@@ -7,7 +7,7 @@ plugins {
     id("linkletter.client.convention.kotlin.serialization")
 }
 
-android.namespace = "linkletter.client.feature.main"
+android.namespace = "linkletter.client.feature.blogadd"
 
 kotlin {
     sourceSets {
@@ -17,10 +17,6 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.data)
             implementation(projects.core.navigation)
-
-            implementation(projects.feature.home)
-            implementation(projects.feature.bookmark)
-            implementation(projects.feature.blogadd)
 
             implementation(libs.navigation.compose)
 
