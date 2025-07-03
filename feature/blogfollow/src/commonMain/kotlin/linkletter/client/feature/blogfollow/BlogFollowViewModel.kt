@@ -63,7 +63,6 @@ class BlogFollowViewModel(
             .onStart {
                 _state.value = BlogFollowState.Loading
             }.onEach { blog ->
-                println(blog)
                 val isFollowed = blog.url in blogUrlList.value
                 val postList =
                     blog.postList.map { post ->

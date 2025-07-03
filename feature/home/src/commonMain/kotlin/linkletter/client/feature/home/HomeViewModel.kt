@@ -57,7 +57,6 @@ class HomeViewModel(
 
                 _state.value = HomeState.Feed(newPostList)
             }.catch {
-                println(it.toString())
                 // TODO 에러
             }.launchIn(viewModelScope)
     }
