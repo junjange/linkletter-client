@@ -68,6 +68,7 @@ private fun BackButton(
         Icon(
             painter = painterResource(Res.drawable.ic_arrow_back_ios_new),
             contentDescription = "뒤로 가기",
+            tint = Color.Gray,
         )
     }
 }
@@ -111,9 +112,7 @@ private fun SearchTextField(
 }
 
 @Composable
-private fun SearchPlaceholder(
-    modifier: Modifier = Modifier,
-) {
+private fun SearchPlaceholder(modifier: Modifier = Modifier) {
     Text(
         text = stringResource(Res.string.hint_blog_add_search),
         style = LinkletterTheme.typography.titleMediumR.copy(color = Color.Gray),
@@ -142,11 +141,12 @@ private fun SearchTrailingIcon(
 }
 
 @Composable
-private fun createTextFieldColors() = TextFieldDefaults.colors(
-    focusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
-    unfocusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
-    disabledContainerColor = Color.Transparent,
-    focusedIndicatorColor = Color.Transparent,
-    unfocusedIndicatorColor = Color.Transparent,
-    cursorColor = LinkletterTheme.colorScheme.onSurface,
-)
+private fun createTextFieldColors() =
+    TextFieldDefaults.colors(
+        focusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
+        unfocusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
+        disabledContainerColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        cursorColor = LinkletterTheme.colorScheme.onSurface,
+    )
