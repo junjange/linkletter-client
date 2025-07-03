@@ -46,6 +46,10 @@ class HomeViewModel(
                 _state.value = HomeState.Loading
                 delay(1000)
             }.onEach { blogList ->
+                if (blogList.isEmpty()) {
+                    _state.value = HomeState.Empty
+                    return@onEach
+                }
                 val newPostList = mutableListOf<Post>()
                 blogList.map { blog ->
                     newPostList +=
@@ -57,6 +61,7 @@ class HomeViewModel(
 
                 _state.value = HomeState.Feed(newPostList)
             }.catch {
+                _state.value = HomeState.Empty
                 // TODO 에러
             }.launchIn(viewModelScope)
     }
