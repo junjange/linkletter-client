@@ -44,7 +44,7 @@ class HomeViewModel(
         fetchBlogListUseCase()
             .onStart {
                 _state.value = HomeState.Loading
-                delay(1000)
+                delay(300)
             }.onEach { blogList ->
                 if (blogList.isEmpty()) {
                     _state.value = HomeState.Empty
