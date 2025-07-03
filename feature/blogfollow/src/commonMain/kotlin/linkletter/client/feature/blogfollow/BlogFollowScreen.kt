@@ -1,13 +1,17 @@
 package linkletter.client.feature.blogfollow
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -23,13 +27,21 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import linkletter.client.core.designsystem.components.EmptyScreen
+import linkletter.client.core.designsystem.components.PostList
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.designsystem.utils.addFocusCleaner
-import linkletter.client.feature.blogfollow.components.BlogFollowListItem
 import linkletter.client.feature.blogfollow.components.BlogFollowSearchBar
+import linkletter.client.feature.blogfollow.components.BlogResultCard
 import linkletter.client.feature.blogfollow.model.BlogFollowEffect
 import linkletter.client.feature.blogfollow.model.BlogFollowEvent
-import linkletter.client.feature.blogfollow.model.BlogFollowUiModel
+import linkletter.client.feature.blogfollow.model.BlogFollowState.BlogFollow
+import linkletter.client.feature.blogfollow.model.BlogFollowState.Empty
+import linkletter.client.feature.blogfollow.model.BlogFollowState.Loading
+import linkletter_client.feature.blogfollow.generated.resources.Res
+import linkletter_client.feature.blogfollow.generated.resources.empty_subtitle
+import linkletter_client.feature.blogfollow.generated.resources.empty_title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +90,7 @@ fun BlogFollowScreen(
                     focusManager.clearFocus()
                 },
                 onSearch = { query ->
-                    // 검색 기능 미구현 부분
+                    viewModel.onEvent(event = BlogFollowEvent.Search(query = query))
                 },
             )
         },
@@ -92,41 +104,78 @@ fun BlogFollowScreen(
             )
         },
     ) { innerPadding ->
-        BlogFollowContent(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .addFocusCleaner(focusManager),
-            blogFollowUiModelList = state.blogFollowUiModelList,
-            onBlogClick = { blog ->
-                viewModel.onEvent(event = BlogFollowEvent.BlogClicked(link = blog.link))
-                focusManager.clearFocus()
-            },
-            onBlogFollow = { blog ->
-                viewModel.onEvent(event = BlogFollowEvent.BlogFollowToggleClicked(blogFollowUiModel = blog))
-                focusManager.clearFocus()
-            },
-        )
+        when (state) {
+            is Loading -> {
+                BlogFollowContent(
+                    blogFollow = BlogFollow.Default,
+                    showPlaceholder = true,
+                    modifier =
+                        Modifier
+                            .padding(innerPadding)
+                            .addFocusCleaner(focusManager),
+                    onBlogClick = {},
+                    onBlogFollow = {},
+                )
+            }
+
+            is BlogFollow -> {
+                BlogFollowContent(
+                    blogFollow = state as BlogFollow,
+                    showPlaceholder = false,
+                    modifier =
+                        Modifier
+                            .padding(innerPadding)
+                            .addFocusCleaner(focusManager),
+                    onBlogClick = { blogUrl ->
+                        viewModel.onEvent(event = BlogFollowEvent.BlogClicked(link = blogUrl))
+                        focusManager.clearFocus()
+                    },
+                    onBlogFollow = {
+                        viewModel.onEvent(event = BlogFollowEvent.BlogFollowToggleClicked)
+                        focusManager.clearFocus()
+                    },
+                )
+            }
+
+            is Empty -> {
+                EmptyScreen(
+                    title = stringResource(Res.string.empty_title),
+                    subTitle = stringResource(Res.string.empty_subtitle),
+                )
+            }
+        }
     }
 }
 
 @Composable
 private fun BlogFollowContent(
+    blogFollow: BlogFollow,
+    showPlaceholder: Boolean,
     modifier: Modifier = Modifier,
-    blogFollowUiModelList: List<BlogFollowUiModel>,
-    onBlogClick: (BlogFollowUiModel) -> Unit,
-    onBlogFollow: (BlogFollowUiModel) -> Unit,
+    onBlogClick: (String) -> Unit,
+    onBlogFollow: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = modifier,
+    val lazyListState = rememberLazyListState()
+
+    Column(
+        modifier =
+            modifier.fillMaxSize(),
     ) {
-        items(blogFollowUiModelList.size) { index ->
-            BlogFollowListItem(
-                blogFollowUiModel = blogFollowUiModelList[index],
-                onClick = onBlogClick,
-                onFollow = onBlogFollow,
-            )
-        }
+        BlogResultCard(
+            blogFollow = blogFollow,
+            showPlaceholder = showPlaceholder,
+            onBlogClick = onBlogClick,
+            onBlogFollow = onBlogFollow,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        PostList(
+            posts = blogFollow.blog.postList,
+            author = blogFollow.blog.author,
+            showPlaceholder = showPlaceholder,
+            lazyListState = lazyListState,
+            onPostClick = onBlogClick,
+        )
     }
 }

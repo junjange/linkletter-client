@@ -19,7 +19,7 @@ sealed class BlogPlatform {
         override val rssUrl: String,
     ) : BlogPlatform()
 
-    data class Blog(
+    data class UnKnown(
         override val rssUrl: String,
     ) : BlogPlatform()
 
@@ -36,7 +36,7 @@ sealed class BlogPlatform {
 
                 "brunch.co.kr" in cleaned -> Brunch(rssUrl = rssUrl)
 
-                else -> Blog(rssUrl = rssUrl)
+                else -> UnKnown(rssUrl = rssUrl)
             }
         }
     }

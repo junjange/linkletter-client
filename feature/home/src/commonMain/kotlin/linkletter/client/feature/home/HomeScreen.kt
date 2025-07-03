@@ -21,14 +21,21 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import linkletter.client.core.designsystem.components.EmptyScreen
+import linkletter.client.core.designsystem.components.PostList
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.designsystem.utils.addFocusCleaner
+import linkletter.client.core.model.Author
+import linkletter.client.core.model.Blog
 import linkletter.client.feature.home.components.ExpandableActionButton
 import linkletter.client.feature.home.components.HomeSearchBar
-import linkletter.client.feature.home.components.PostList
 import linkletter.client.feature.home.model.HomeEffect
 import linkletter.client.feature.home.model.HomeEvent
 import linkletter.client.feature.home.model.HomeState
+import linkletter_client.feature.home.generated.resources.Res
+import linkletter_client.feature.home.generated.resources.empty_subtitle
+import linkletter_client.feature.home.generated.resources.empty_title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,6 +94,7 @@ fun HomeScreen(
                     .addFocusCleaner(focusManager),
             state = state,
             lazyListState = lazyListState,
+            onRefresh = { viewModel.onEvent(HomeEvent.FeedRefresh) },
             onPostClick = { link -> viewModel.onEvent(HomeEvent.PostClicked(link = link)) },
         )
     }
@@ -98,15 +106,14 @@ private fun HomeContent(
     state: HomeState,
     lazyListState: LazyListState,
     modifier: Modifier = Modifier,
+    onRefresh: () -> Unit,
     onPostClick: (link: String) -> Unit,
 ) {
     val refreshState = rememberPullToRefreshState()
 
     PullToRefreshBox(
         isRefreshing = state is HomeState.Loading,
-        onRefresh = {
-            // TODO 로직 추가
-        },
+        onRefresh = onRefresh,
         state = refreshState,
         modifier = modifier.fillMaxSize(),
         indicator = {
@@ -119,10 +126,33 @@ private fun HomeContent(
             )
         },
     ) {
-        PostList(
-            state = state,
-            lazyListState = lazyListState,
-            onPostClick = onPostClick,
-        )
+        when (state) {
+            is HomeState.Loading -> {
+                PostList(
+                    posts = Blog.Default.postList,
+                    author = Author.Default,
+                    showPlaceholder = true,
+                    lazyListState = lazyListState,
+                    onPostClick = onPostClick,
+                )
+            }
+
+            is HomeState.Feed -> {
+                PostList(
+                    posts = state.blog.postList,
+                    author = state.blog.author,
+                    showPlaceholder = false,
+                    lazyListState = lazyListState,
+                    onPostClick = onPostClick,
+                )
+            }
+
+            is HomeState.Empty -> {
+                EmptyScreen(
+                    title = stringResource(Res.string.empty_title),
+                    subTitle = stringResource(Res.string.empty_subtitle),
+                )
+            }
+        }
     }
 }

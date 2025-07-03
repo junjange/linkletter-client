@@ -44,56 +44,109 @@ internal fun BlogFollowSearchBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        IconButton(onClick = onBackClick) {
-            Icon(
-                painter = painterResource(Res.drawable.ic_arrow_back_ios_new),
-                contentDescription = null,
-            )
-        }
+        BackButton(onBackClick = onBackClick)
 
-        TextField(
-            value = query,
-            onValueChange = { query = it },
-            textStyle = LinkletterTheme.typography.titleMediumR.copy(color = LinkletterTheme.colorScheme.onSurface),
-            placeholder = {
-                Text(
-                    text = stringResource(Res.string.hint_blog_add_search),
-                    style = LinkletterTheme.typography.titleMediumR.copy(color = Color.Gray),
-                )
-            },
-            trailingIcon = {
-                if (query.isNotEmpty()) {
-                    IconButton(onClick = { query = "" }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_cancel),
-                            contentDescription = null,
-                            tint = Color.Gray,
-                        )
-                    }
-                }
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions =
-                KeyboardActions(
-                    onDone = {
-                        if (query.isNotBlank()) {
-                            onSearch(query)
-                            focusManager.clearFocus()
-                        }
-                    },
-                ),
-            singleLine = true,
+        SearchTextField(
+            query = query,
+            onQueryChange = { query = it },
+            onSearch = onSearch,
+            focusManager = focusManager,
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            colors =
-                TextFieldDefaults.colors(
-                    focusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
-                    unfocusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
-                    disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = LinkletterTheme.colorScheme.onSurface,
-                ),
         )
     }
 }
+
+@Composable
+private fun BackButton(
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onBackClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            painter = painterResource(Res.drawable.ic_arrow_back_ios_new),
+            contentDescription = "뒤로 가기",
+        )
+    }
+}
+
+@Composable
+private fun SearchTextField(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
+    focusManager: FocusManager,
+    modifier: Modifier = Modifier,
+) {
+    TextField(
+        value = query,
+        onValueChange = onQueryChange,
+        textStyle = LinkletterTheme.typography.titleMediumR.copy(color = LinkletterTheme.colorScheme.onSurface),
+        placeholder = {
+            SearchPlaceholder()
+        },
+        trailingIcon = {
+            SearchTrailingIcon(
+                query = query,
+                onClear = { onQueryChange("") },
+            )
+        },
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        keyboardActions =
+            KeyboardActions(
+                onDone = {
+                    if (query.isNotBlank()) {
+                        onSearch(query)
+                        focusManager.clearFocus()
+                    }
+                },
+            ),
+        singleLine = true,
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        colors = createTextFieldColors(),
+    )
+}
+
+@Composable
+private fun SearchPlaceholder(
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = stringResource(Res.string.hint_blog_add_search),
+        style = LinkletterTheme.typography.titleMediumR.copy(color = Color.Gray),
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun SearchTrailingIcon(
+    query: String,
+    onClear: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (query.isNotEmpty()) {
+        IconButton(
+            onClick = onClear,
+            modifier = modifier,
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_cancel),
+                contentDescription = "검색어 지우기",
+                tint = Color.Gray,
+            )
+        }
+    }
+}
+
+@Composable
+private fun createTextFieldColors() = TextFieldDefaults.colors(
+    focusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
+    unfocusedContainerColor = LinkletterTheme.colorScheme.placeholderColor,
+    disabledContainerColor = Color.Transparent,
+    focusedIndicatorColor = Color.Transparent,
+    unfocusedIndicatorColor = Color.Transparent,
+    cursorColor = LinkletterTheme.colorScheme.onSurface,
+)

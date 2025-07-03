@@ -9,6 +9,6 @@ internal object RssParserFactory {
             is BlogPlatform.Velog -> VelogRssParser
             is BlogPlatform.Naver -> NaverRssParser
             is BlogPlatform.Brunch -> BrunchRssParser
-            is BlogPlatform.Blog -> BlogRssParser
+            is BlogPlatform.UnKnown -> UnKnownBlogRssParser
         }
 }

@@ -2,40 +2,49 @@ package linkletter.client.core.data.parser
 
 import com.fleeksoft.ksoup.Ksoup
 import linkletter.client.core.model.Author
+import linkletter.client.core.model.Blog
 import linkletter.client.core.model.Post
 
-internal object BlogRssParser : RssParser {
-    override fun parse(xml: String): List<Post> {
+internal object UnKnownBlogRssParser : RssParser {
+    override fun parse(xml: String): Blog {
         val doc = Ksoup.parseXml(xml)
         val channel = doc.selectFirst(TAG_CHANNEL)
-        val domain = channel?.safeText(TAG_LINK).orEmpty()
+        val url = channel?.safeText(TAG_LINK).orEmpty()
+
         val name =
             channel
                 ?.safeText(TAG_TITLE)
                 ?.takeIf { it.isNotBlank() }
-                ?: domain
+                ?: url
 
-        return doc.select(TAG_ITEM).mapNotNull { item ->
-            val title = item.unescapedText(TAG_TITLE)
-            val link = item.safeText(TAG_LINK)
-            val pubDate = item.safeText(TAG_PUB_DATE)
+        val postList =
+            doc.select(TAG_ITEM).mapNotNull { item ->
+                val title = item.unescapedText(TAG_TITLE)
+                val link = item.safeText(TAG_LINK)
+                val pubDate = item.safeText(TAG_PUB_DATE)
 
-            val descriptionHtml = item.unescapedText(TAG_DESCRIPTION)
-            val innerHtml = Ksoup.parse(descriptionHtml)
+                val descriptionHtml = item.unescapedText(TAG_DESCRIPTION)
+                val innerHtml = Ksoup.parse(descriptionHtml)
 
-            val imgUrl = innerHtml.selectFirst(TAG_IMG)?.attr(TAG_SRC)
-            val thumbnailUrl = buildImageUrl(domain, imgUrl)
-            val description = innerHtml.text()
+                val imgUrl = innerHtml.selectFirst(TAG_IMG)?.attr(TAG_SRC)
+                val thumbnailUrl = buildImageUrl(url, imgUrl)
+                val description = innerHtml.text()
 
-            Post(
-                author = Author(name = name, imageUrl = null),
-                title = title,
-                description = description,
-                link = link,
-                thumbnailUrl = thumbnailUrl,
-                pubDate = pubDate,
-            )
-        }
+                Post(
+                    title = title,
+                    description = description,
+                    link = link,
+                    thumbnailUrl = thumbnailUrl,
+                    pubDate = pubDate,
+                )
+            }
+
+        return Blog(
+            name = name,
+            author = Author(name = name, imageUrl = null),
+            url = url,
+            postList = postList,
+        )
     }
 
     private fun buildImageUrl(
