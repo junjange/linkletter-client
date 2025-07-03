@@ -31,6 +31,7 @@ internal object UnKnownBlogRssParser : RssParser {
                 val description = innerHtml.text()
 
                 Post(
+                    author = Author(name = name, imageUrl = null),
                     title = title,
                     description = description,
                     link = link,

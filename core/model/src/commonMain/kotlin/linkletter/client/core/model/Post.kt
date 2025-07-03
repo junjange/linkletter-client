@@ -1,6 +1,7 @@
 package linkletter.client.core.model
 
 data class Post(
+    val author: Author,
     val title: String,
     val description: String,
     val link: String,
@@ -10,6 +11,7 @@ data class Post(
     companion object {
         val Default =
             Post(
+                author = Author.Default,
                 title = "",
                 description = "",
                 link = "",

@@ -13,13 +13,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import linkletter.client.core.common.formatRssDateToKorean
-import linkletter.client.core.domain.usecase.GetBlogUseCase
+import linkletter.client.core.domain.usecase.FetchBlogListUseCase
+import linkletter.client.core.model.Post
 import linkletter.client.feature.home.model.HomeEffect
 import linkletter.client.feature.home.model.HomeEvent
 import linkletter.client.feature.home.model.HomeState
 
 class HomeViewModel(
-    private val getBlogUseCase: GetBlogUseCase,
+    private val fetchBlogListUseCase: FetchBlogListUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow<HomeState>(HomeState.Loading)
     val state = _state.asStateFlow()
@@ -40,17 +41,27 @@ class HomeViewModel(
     }
 
     private fun fetchFeed() {
-        getBlogUseCase(url = "https://fre2-dom.tistory.com/")
+        fetchBlogListUseCase()
             .onStart {
                 _state.value = HomeState.Loading
-                delay(1000)
-            }.onEach { blog ->
-                val postList =
-                    blog.postList.map { post ->
-                        post.copy(pubDate = post.pubDate.formatRssDateToKorean())
-                    }
-                _state.value = HomeState.Feed(blog.copy(postList = postList))
+                delay(300)
+            }.onEach { blogList ->
+                if (blogList.isEmpty()) {
+                    _state.value = HomeState.Empty
+                    return@onEach
+                }
+                val newPostList = mutableListOf<Post>()
+                blogList.map { blog ->
+                    newPostList +=
+                        blog.postList.map { post ->
+                            post.copy(pubDate = post.pubDate.formatRssDateToKorean())
+                        }
+                }
+                newPostList.sortBy { it.pubDate }
+
+                _state.value = HomeState.Feed(newPostList)
             }.catch {
+                _state.value = HomeState.Empty
                 // TODO 에러
             }.launchIn(viewModelScope)
     }

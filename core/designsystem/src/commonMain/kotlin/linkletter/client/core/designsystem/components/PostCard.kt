@@ -30,7 +30,6 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun PostCard(
     post: Post,
-    author: Author,
     showPlaceholder: Boolean,
     modifier: Modifier = Modifier,
     onClick: (link: String) -> Unit = {},
@@ -62,7 +61,6 @@ fun PostCard(
 
             PostContent(
                 post = post,
-                author = author,
                 shimmerModifier = shimmerModifier,
             )
         }
@@ -91,7 +89,6 @@ private fun ThumbnailImage(
 @Composable
 private fun PostContent(
     post: Post,
-    author: Author,
     shimmerModifier: Modifier,
     modifier: Modifier = Modifier,
 ) {
@@ -128,7 +125,7 @@ private fun PostContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         AuthorRow(
-            author = author,
+            author = post.author,
             shimmerModifier = shimmerModifier,
         )
         Spacer(modifier = Modifier.height(12.dp))

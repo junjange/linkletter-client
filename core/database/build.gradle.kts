@@ -14,6 +14,18 @@ kotlin {
             api(projects.core.model)
 
             implementation(libs.kotlinx.datetime)
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
+            implementation(libs.koin.core)
         }
+    }
+}
+
+dependencies {
+    with(libs.room.compiler) {
+        add("kspAndroid", this)
+        add("kspIosX64", this)
+        add("kspIosArm64", this)
+        add("kspIosSimulatorArm64", this)
     }
 }

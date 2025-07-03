@@ -8,13 +8,11 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import linkletter.client.core.model.Author
 import linkletter.client.core.model.Post
 
 @Composable
 fun PostList(
     posts: List<Post>,
-    author: Author,
     showPlaceholder: Boolean,
     lazyListState: LazyListState,
     modifier: Modifier = Modifier,
@@ -28,7 +26,6 @@ fun PostList(
         items(posts.size) { index ->
             PostCard(
                 post = posts[index],
-                author = author,
                 showPlaceholder = showPlaceholder,
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = onPostClick,
