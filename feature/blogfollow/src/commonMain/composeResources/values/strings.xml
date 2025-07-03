@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hint_blog_add_search">즐겨보는 블로그를 팔로우해보세요!</string>
+    <string name="empty_title">블로그를 찾아주세요</string>
+    <string name="empty_subtitle">올바른 블로그 URL을 입력해주세요</string>
 </resources>
