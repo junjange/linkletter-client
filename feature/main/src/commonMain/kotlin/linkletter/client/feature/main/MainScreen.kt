@@ -21,27 +21,6 @@ fun MainContent(
     modifier: Modifier = Modifier,
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
-//    Scaffold(
-//        modifier = modifier.fillMaxSize(),
-//        containerColor = LinkletterTheme.colorScheme.background,
-//        bottomBar = {
-//            MainBottomBar(
-//                visible = navigator.shouldShowBottomBar(),
-//                currentTab = navigator.currentTab,
-//                onTabSelected = { navigator.navigate(it) },
-//            )
-//        },
-//    ) { innerPadding ->
-//        Surface(
-//            modifier = modifier.fillMaxSize().padding(innerPadding),
-//            color = LinkletterTheme.colorScheme.background,
-//        ) {
-//            Box(modifier = Modifier.fillMaxSize()) {
-//                MainNavHost(navigator)
-//            }
-//        }
-//    }
-
     Surface(
         modifier = modifier.fillMaxSize(),
         color = LinkletterTheme.colorScheme.background,
