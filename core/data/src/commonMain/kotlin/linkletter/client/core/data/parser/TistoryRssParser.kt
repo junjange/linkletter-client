@@ -28,6 +28,7 @@ internal object TistoryRssParser : RssParser {
                 val description = descriptionDoc.text()
 
                 Post(
+                    author = Author(name = authorName, imageUrl = imageUrl),
                     title = title,
                     description = description,
                     link = link,

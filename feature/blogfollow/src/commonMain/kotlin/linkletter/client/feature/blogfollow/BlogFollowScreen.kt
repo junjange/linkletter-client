@@ -172,7 +172,6 @@ private fun BlogFollowContent(
 
         PostList(
             posts = blogFollow.blog.postList,
-            author = blogFollow.blog.author,
             showPlaceholder = showPlaceholder,
             lazyListState = lazyListState,
             onPostClick = onBlogClick,

@@ -24,6 +24,7 @@ internal object VelogRssParser : RssParser {
                 val thumbnail = descriptionDoc.safeAttr(TAG_IMAGE, TAG_SRC)
 
                 Post(
+                    author = Author(name = name, imageUrl = authorImageUrl),
                     title = title,
                     description = description,
                     link = item.safeText(TAG_LINK),

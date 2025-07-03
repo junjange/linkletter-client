@@ -26,6 +26,7 @@ internal object BrunchRssParser : RssParser {
 
                 Post(
                     title = title,
+                    author = Author(name = name, imageUrl = null),
                     description = description,
                     link = link,
                     thumbnailUrl = thumbnail,
