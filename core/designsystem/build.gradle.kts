@@ -9,6 +9,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            api(projects.core.model)
+
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
 

@@ -1,4 +1,4 @@
-package linkletter.client.feature.home.components
+package linkletter.client.core.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,18 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import linkletter.client.core.designsystem.components.NetworkImage
 import linkletter.client.core.designsystem.theme.Gray500
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.model.Author
 import linkletter.client.core.model.Post
-import linkletter_client.feature.home.generated.resources.Res
-import linkletter_client.feature.home.generated.resources.by
+import linkletter_client.core.designsystem.generated.resources.Res
+import linkletter_client.core.designsystem.generated.resources.by
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun PostCard(
+fun PostCard(
     post: Post,
+    author: Author,
     showPlaceholder: Boolean,
     modifier: Modifier = Modifier,
     onClick: (link: String) -> Unit = {},
@@ -62,6 +62,7 @@ internal fun PostCard(
 
             PostContent(
                 post = post,
+                author = author,
                 shimmerModifier = shimmerModifier,
             )
         }
@@ -77,7 +78,7 @@ private fun ThumbnailImage(
     thumbnailUrl?.let {
         NetworkImage(
             imageUrl = thumbnailUrl,
-            contentDescription = "썸네일",
+            contentDescription = "포스트 썸네일 이미지",
             modifier =
                 modifier
                     .fillMaxWidth()
@@ -90,6 +91,7 @@ private fun ThumbnailImage(
 @Composable
 private fun PostContent(
     post: Post,
+    author: Author,
     shimmerModifier: Modifier,
     modifier: Modifier = Modifier,
 ) {
@@ -126,7 +128,7 @@ private fun PostContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         AuthorRow(
-            author = post.author,
+            author = author,
             shimmerModifier = shimmerModifier,
         )
         Spacer(modifier = Modifier.height(12.dp))
