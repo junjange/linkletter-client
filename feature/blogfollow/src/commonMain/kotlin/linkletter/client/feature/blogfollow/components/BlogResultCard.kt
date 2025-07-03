@@ -74,7 +74,7 @@ internal fun BlogResultCard(
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = blogFollow.blog.author.name,
+                    text = blogFollow.blog.name,
                     style = LinkletterTheme.typography.titleMediumR.copy(color = LinkletterTheme.colorScheme.onSurface),
                     modifier = Modifier.then(shimmerModifier),
                 )
