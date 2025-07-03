@@ -1,10 +1,10 @@
 package linkletter.client.core.data.parser
 
 import com.fleeksoft.ksoup.nodes.Element
-import linkletter.client.core.model.Post
+import linkletter.client.core.model.Blog
 
 sealed interface RssParser {
-    fun parse(xml: String): List<Post>
+    fun parse(xml: String): Blog
 }
 
 fun Element?.safeText(selector: String): String = this?.selectFirst(selector)?.text().orEmpty()
