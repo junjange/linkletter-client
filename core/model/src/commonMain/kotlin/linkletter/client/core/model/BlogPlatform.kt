@@ -19,6 +19,10 @@ sealed class BlogPlatform {
         override val rssUrl: String,
     ) : BlogPlatform()
 
+    data class Medium(
+        override val rssUrl: String,
+    ) : BlogPlatform()
+
     data class UnKnown(
         override val rssUrl: String,
     ) : BlogPlatform()
@@ -35,6 +39,8 @@ sealed class BlogPlatform {
                 "naver.com" in cleaned -> Naver(rssUrl = rssUrl)
 
                 "brunch.co.kr" in cleaned -> Brunch(rssUrl = rssUrl)
+
+                "medium.com" in cleaned -> Medium(rssUrl = rssUrl)
 
                 else -> UnKnown(rssUrl = rssUrl)
             }
