@@ -37,8 +37,8 @@ kotlin {
             implementation(projects.core.network)
 
             implementation(projects.feature.main)
-            implementation(projects.feature.home)
             implementation(projects.feature.bookmark)
+            implementation(projects.feature.followingfeed)
             implementation(projects.feature.blogfollow)
 
             implementation(libs.koin.core)

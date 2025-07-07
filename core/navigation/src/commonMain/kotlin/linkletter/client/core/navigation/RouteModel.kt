@@ -9,7 +9,7 @@ sealed interface Route {
 
 sealed interface MainTabRoute : Route {
     @Serializable
-    data object Home : MainTabRoute
+    data object FollowingFeed : MainTabRoute
 
     @Serializable
     data object Bookmark : MainTabRoute

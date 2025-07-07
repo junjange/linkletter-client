@@ -8,7 +8,7 @@ import linkletter.client.core.domain.di.coreDomainModule
 import linkletter.client.core.network.di.coreNetworkModule
 import linkletter.client.feature.blogfollow.di.featureBlogFollowModule
 import linkletter.client.feature.bookmark.di.featureBookmarkModule
-import linkletter.client.feature.home.di.featureHomeModule
+import linkletter.client.feature.followingfeed.di.featureFollowingFeedModule
 import linkletter.client.feature.main.MainScreen
 import org.koin.core.KoinApplication
 import org.koin.dsl.KoinAppDeclaration
@@ -40,8 +40,8 @@ internal val appModule =
         )
 
         includes(
-            featureHomeModule,
             featureBookmarkModule,
+            featureFollowingFeedModule,
             featureBlogFollowModule,
         )
     }

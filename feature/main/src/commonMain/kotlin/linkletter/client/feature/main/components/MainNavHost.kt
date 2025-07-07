@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import linkletter.client.feature.blogfollow.navigation.blogFollowNavGraph
 import linkletter.client.feature.bookmark.navigation.bookmarkNavGraph
-import linkletter.client.feature.home.navigation.homeNavGraph
+import linkletter.client.feature.followingfeed.navigation.followingFeedNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
 
 @Composable
@@ -19,7 +19,7 @@ fun MainNavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
     ) {
-        homeNavGraph(
+        followingFeedNavGraph(
             onBlogFollowClick = navigator::navigateBlogFollow,
         )
         bookmarkNavGraph()

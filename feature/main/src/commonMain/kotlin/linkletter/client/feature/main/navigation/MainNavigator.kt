@@ -13,7 +13,7 @@ import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
 import linkletter.client.feature.blogfollow.navigation.navigateBlogFollow
 import linkletter.client.feature.bookmark.navigation.navigateBookmark
-import linkletter.client.feature.home.navigation.navigateHome
+import linkletter.client.feature.followingfeed.navigation.navigateFollowingFeed
 
 class MainNavigator(
     val navController: NavHostController,
@@ -44,8 +44,8 @@ class MainNavigator(
             }
 
         when (tab) {
-            MainTab.HOME -> navController.navigateHome(navOptions)
             MainTab.BOOKMARK -> navController.navigateBookmark(navOptions)
+            MainTab.FOLLOWING_FEED -> navController.navigateFollowingFeed(navOptions)
         }
     }
 
@@ -57,8 +57,8 @@ class MainNavigator(
         navController.navigateBlogFollow()
     }
 
-    fun popBackStackIfNotHome() {
-        if (!isSameCurrentDestination<MainTabRoute.Home>()) {
+    fun popBackStackIfNotFollowingFeed() {
+        if (!isSameCurrentDestination<MainTabRoute.FollowingFeed>()) {
             popBackStack()
         }
     }

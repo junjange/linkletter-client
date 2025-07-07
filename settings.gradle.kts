@@ -44,6 +44,6 @@ include(":core:database")
 include(":core:navigation")
 
 include(":feature:main")
-include(":feature:home")
 include(":feature:bookmark")
+include(":feature:followingfeed")
 include(":feature:blogfollow")
