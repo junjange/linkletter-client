@@ -7,7 +7,7 @@ plugins {
     id("linkletter.client.convention.kotlin.serialization")
 }
 
-android.namespace = "linkletter.client.feature.bookmark"
+android.namespace = "linkletter.client.feature.mybloggers"
 
 kotlin {
     sourceSets {

@@ -12,8 +12,8 @@ import androidx.navigation.navOptions
 import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
 import linkletter.client.feature.blogfollow.navigation.navigateBlogFollow
-import linkletter.client.feature.bookmark.navigation.navigateBookmark
 import linkletter.client.feature.followingfeed.navigation.navigateFollowingFeed
+import linkletter.client.feature.mybloggers.navigation.navigateMyBloggers
 
 class MainNavigator(
     val navController: NavHostController,
@@ -25,7 +25,7 @@ class MainNavigator(
                 .value
                 ?.destination
 
-    val startDestination = MainTab.HOME.route
+    val startDestination = MainTab.FOLLOWING_FEED.route
 
     val currentTab: MainTab?
         @Composable get() =
@@ -44,8 +44,8 @@ class MainNavigator(
             }
 
         when (tab) {
-            MainTab.BOOKMARK -> navController.navigateBookmark(navOptions)
             MainTab.FOLLOWING_FEED -> navController.navigateFollowingFeed(navOptions)
+            MainTab.MY_BLOGGERS -> navController.navigateMyBloggers(navOptions)
         }
     }
 

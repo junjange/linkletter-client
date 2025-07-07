@@ -18,8 +18,8 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.navigation)
 
-            implementation(projects.feature.bookmark)
             implementation(projects.feature.followingfeed)
+            implementation(projects.feature.mybloggers)
             implementation(projects.feature.blogfollow)
 
             implementation(libs.navigation.compose)

@@ -1,4 +1,4 @@
-package linkletter.client.feature.bookmark
+package linkletter.client.feature.mybloggers
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +12,9 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun BookmarkScreen(
+fun MyBloggersScreen(
     modifier: Modifier = Modifier,
-    viewModel: BookmarkViewModel = koinViewModel(),
+    viewModel: MyBloggersViewModel = koinViewModel(),
 ) {
     Column(
         modifier =
@@ -23,6 +23,6 @@ fun BookmarkScreen(
                 .fillMaxSize()
                 .padding(8.dp),
     ) {
-        Text(text = "Bookmark")
+        Text(text = "MyBloggers")
     }
 }

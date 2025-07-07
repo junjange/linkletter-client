@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import linkletter.client.feature.blogfollow.navigation.blogFollowNavGraph
-import linkletter.client.feature.bookmark.navigation.bookmarkNavGraph
 import linkletter.client.feature.followingfeed.navigation.followingFeedNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
+import linkletter.client.feature.mybloggers.navigation.myBloggersScreenNavGraph
 
 @Composable
 fun MainNavHost(
@@ -22,9 +22,9 @@ fun MainNavHost(
         followingFeedNavGraph(
             onBlogFollowClick = navigator::navigateBlogFollow,
         )
-        bookmarkNavGraph()
+        myBloggersScreenNavGraph()
         blogFollowNavGraph(
-            onBackClick = navigator::popBackStackIfNotHome,
+            onBackClick = navigator::popBackStackIfNotFollowingFeed,
         )
     }
 }

@@ -12,5 +12,5 @@ sealed interface MainTabRoute : Route {
     data object FollowingFeed : MainTabRoute
 
     @Serializable
-    data object Bookmark : MainTabRoute
+    data object MyBloggers : MainTabRoute
 }
