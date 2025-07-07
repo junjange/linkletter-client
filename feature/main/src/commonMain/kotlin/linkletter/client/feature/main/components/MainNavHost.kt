@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import linkletter.client.feature.blogfollow.navigation.blogFollowNavGraph
+import linkletter.client.feature.addblog.navigation.addBlogNavGraph
 import linkletter.client.feature.followingfeed.navigation.followingFeedNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
 import linkletter.client.feature.mybloggers.navigation.myBloggersScreenNavGraph
@@ -20,10 +20,10 @@ fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         followingFeedNavGraph(
-            onBlogFollowClick = navigator::navigateBlogFollow,
+            onAddBlogClick = navigator::navigateAddBlog,
         )
         myBloggersScreenNavGraph()
-        blogFollowNavGraph(
+        addBlogNavGraph(
             onBackClick = navigator::popBackStackIfNotFollowingFeed,
         )
     }

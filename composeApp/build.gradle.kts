@@ -39,7 +39,7 @@ kotlin {
             implementation(projects.feature.main)
             implementation(projects.feature.followingfeed)
             implementation(projects.feature.mybloggers)
-            implementation(projects.feature.blogfollow)
+            implementation(projects.feature.addblog)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
