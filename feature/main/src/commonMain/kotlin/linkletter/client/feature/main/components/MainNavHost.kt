@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import linkletter.client.feature.blogfollow.navigation.blogFollowNavGraph
-import linkletter.client.feature.bookmark.navigation.bookmarkNavGraph
-import linkletter.client.feature.home.navigation.homeNavGraph
+import linkletter.client.feature.addblog.navigation.addBlogNavGraph
+import linkletter.client.feature.followingfeed.navigation.followingFeedNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
+import linkletter.client.feature.mybloggers.navigation.myBloggersScreenNavGraph
 
 @Composable
 fun MainNavHost(
@@ -19,12 +19,12 @@ fun MainNavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
     ) {
-        homeNavGraph(
-            onBlogFollowClick = navigator::navigateBlogFollow,
+        followingFeedNavGraph(
+            onAddBlogClick = navigator::navigateAddBlog,
         )
-        bookmarkNavGraph()
-        blogFollowNavGraph(
-            onBackClick = navigator::popBackStackIfNotHome,
+        myBloggersScreenNavGraph()
+        addBlogNavGraph(
+            onBackClick = navigator::popBackStackIfNotFollowingFeed,
         )
     }
 }

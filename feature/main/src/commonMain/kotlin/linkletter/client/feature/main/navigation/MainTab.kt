@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
 import linkletter_client.feature.main.generated.resources.Res
-import linkletter_client.feature.main.generated.resources.ic_bookmark
-import linkletter_client.feature.main.generated.resources.ic_home
+import linkletter_client.feature.main.generated.resources.ic_following_feed
+import linkletter_client.feature.main.generated.resources.ic_groups
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class MainTab(
@@ -13,15 +13,15 @@ enum class MainTab(
     val contentDescription: String,
     val route: MainTabRoute,
 ) {
-    HOME(
-        iconResId = Res.drawable.ic_home,
-        contentDescription = "홈",
-        route = MainTabRoute.Home,
+    FOLLOWING_FEED(
+        iconResId = Res.drawable.ic_following_feed,
+        contentDescription = "팔로잉 피드",
+        route = MainTabRoute.FollowingFeed,
     ),
-    BOOKMARK(
-        iconResId = Res.drawable.ic_bookmark,
-        contentDescription = "북마크",
-        route = MainTabRoute.Bookmark,
+    MY_BLOGGERS(
+        iconResId = Res.drawable.ic_groups,
+        contentDescription = "내 블로거",
+        route = MainTabRoute.MyBloggers,
     ),
     ;
 

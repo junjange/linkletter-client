@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 sealed interface Route {
     @Serializable
-    data object BlogFollow : Route
+    data object AddBlog : Route
 }
 
 sealed interface MainTabRoute : Route {
     @Serializable
-    data object Home : MainTabRoute
+    data object FollowingFeed : MainTabRoute
 
     @Serializable
-    data object Bookmark : MainTabRoute
+    data object MyBloggers : MainTabRoute
 }

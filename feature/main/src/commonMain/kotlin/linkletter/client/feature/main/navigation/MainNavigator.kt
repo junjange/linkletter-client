@@ -11,9 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import linkletter.client.core.navigation.MainTabRoute
 import linkletter.client.core.navigation.Route
-import linkletter.client.feature.blogfollow.navigation.navigateBlogFollow
-import linkletter.client.feature.bookmark.navigation.navigateBookmark
-import linkletter.client.feature.home.navigation.navigateHome
+import linkletter.client.feature.addblog.navigation.navigateAddBlog
+import linkletter.client.feature.followingfeed.navigation.navigateFollowingFeed
+import linkletter.client.feature.mybloggers.navigation.navigateMyBloggers
 
 class MainNavigator(
     val navController: NavHostController,
@@ -25,7 +25,7 @@ class MainNavigator(
                 .value
                 ?.destination
 
-    val startDestination = MainTab.HOME.route
+    val startDestination = MainTab.FOLLOWING_FEED.route
 
     val currentTab: MainTab?
         @Composable get() =
@@ -44,8 +44,8 @@ class MainNavigator(
             }
 
         when (tab) {
-            MainTab.HOME -> navController.navigateHome(navOptions)
-            MainTab.BOOKMARK -> navController.navigateBookmark(navOptions)
+            MainTab.FOLLOWING_FEED -> navController.navigateFollowingFeed(navOptions)
+            MainTab.MY_BLOGGERS -> navController.navigateMyBloggers(navOptions)
         }
     }
 
@@ -53,12 +53,12 @@ class MainNavigator(
         navController.popBackStack()
     }
 
-    fun navigateBlogFollow() {
-        navController.navigateBlogFollow()
+    fun navigateAddBlog() {
+        navController.navigateAddBlog()
     }
 
-    fun popBackStackIfNotHome() {
-        if (!isSameCurrentDestination<MainTabRoute.Home>()) {
+    fun popBackStackIfNotFollowingFeed() {
+        if (!isSameCurrentDestination<MainTabRoute.FollowingFeed>()) {
             popBackStack()
         }
     }

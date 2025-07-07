@@ -6,10 +6,10 @@ import linkletter.client.core.database.di.coreDatabaseModule
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.domain.di.coreDomainModule
 import linkletter.client.core.network.di.coreNetworkModule
-import linkletter.client.feature.blogfollow.di.featureBlogFollowModule
-import linkletter.client.feature.bookmark.di.featureBookmarkModule
-import linkletter.client.feature.home.di.featureHomeModule
+import linkletter.client.feature.addblog.di.featureAddBlogModule
+import linkletter.client.feature.followingfeed.di.featureFollowingFeedModule
 import linkletter.client.feature.main.MainScreen
+import linkletter.client.feature.mybloggers.di.featureMyBloggersModule
 import org.koin.core.KoinApplication
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -40,9 +40,9 @@ internal val appModule =
         )
 
         includes(
-            featureHomeModule,
-            featureBookmarkModule,
-            featureBlogFollowModule,
+            featureFollowingFeedModule,
+            featureMyBloggersModule,
+            featureAddBlogModule,
         )
     }
 
