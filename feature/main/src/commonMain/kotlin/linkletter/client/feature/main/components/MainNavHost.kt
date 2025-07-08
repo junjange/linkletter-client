@@ -20,7 +20,7 @@ fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         followingFeedNavGraph(
-            onAddBlogClick = navigator::navigateAddBlog,
+            navigateToAddBlog = navigator::navigateAddBlog,
         )
         myBloggersScreenNavGraph()
         addBlogNavGraph(

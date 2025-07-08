@@ -11,8 +11,8 @@ fun NavController.navigateFollowingFeed(navOptions: NavOptions) {
     navigate(MainTabRoute.FollowingFeed, navOptions)
 }
 
-fun NavGraphBuilder.followingFeedNavGraph(onAddBlogClick: () -> Unit) {
+fun NavGraphBuilder.followingFeedNavGraph(navigateToAddBlog: () -> Unit) {
     composable<MainTabRoute.FollowingFeed> {
-        FollowingFeedScreen(onAddBlogClick = onAddBlogClick)
+        FollowingFeedScreen(navigateToAddBlog = navigateToAddBlog)
     }
 }

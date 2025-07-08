@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">내 블로거</string>
+    <string name="empty_title">아직 팔로우한 블로거가 없어요</string>
+    <string name="empty_subtitle">검색 탭에서 관심 있는 블로거를 찾아 팔로우해보세요</string>
+</resources>

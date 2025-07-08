@@ -44,7 +44,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun FollowingFeedScreen(
     modifier: Modifier = Modifier,
     viewModel: FollowingFeedViewModel = koinViewModel(),
-    onAddBlogClick: () -> Unit,
+    navigateToAddBlog: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -55,7 +55,7 @@ fun FollowingFeedScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is FollowingFeedEffect.OpenUri -> uriHandler.openUri(effect.link)
-                is FollowingFeedEffect.NavigateToAddBlog -> onAddBlogClick()
+                is FollowingFeedEffect.NavigateToAddBlog -> navigateToAddBlog()
             }
         }
     }

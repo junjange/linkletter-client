@@ -16,6 +16,7 @@ import linkletter.client.core.designsystem.theme.Gray500
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter_client.core.designsystem.generated.resources.Res
 import linkletter_client.core.designsystem.generated.resources.ic_empty
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -23,16 +24,16 @@ fun EmptyScreen(
     title: String,
     subTitle: String,
     modifier: Modifier = Modifier,
+    imageRes: DrawableResource = Res.drawable.ic_empty,
+    content: @Composable () -> Unit = {},
 ) {
     Column(
-        modifier =
-            modifier
-                .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Image(
-            painter = painterResource(Res.drawable.ic_empty),
+            painter = painterResource(imageRes),
             contentDescription = null,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -50,5 +51,9 @@ fun EmptyScreen(
             style = LinkletterTheme.typography.bodyMediumR,
             color = Gray500,
         )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        content()
     }
 }

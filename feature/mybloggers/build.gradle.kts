@@ -17,12 +17,15 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.data)
             implementation(projects.core.navigation)
+            implementation(projects.core.designsystem)
 
             implementation(libs.navigation.compose)
 
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.coroutines.core)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
