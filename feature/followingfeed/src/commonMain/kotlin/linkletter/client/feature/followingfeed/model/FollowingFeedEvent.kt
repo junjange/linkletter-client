@@ -8,4 +8,8 @@ sealed interface FollowingFeedEvent {
     ) : FollowingFeedEvent
 
     data object AddBlogClicked : FollowingFeedEvent
+
+    data class QueryChanged(
+        val query: String,
+    ) : FollowingFeedEvent
 }

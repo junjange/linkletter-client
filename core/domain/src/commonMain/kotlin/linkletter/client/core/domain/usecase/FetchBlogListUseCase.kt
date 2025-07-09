@@ -1,8 +1,8 @@
 package linkletter.client.core.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import linkletter.client.core.model.Blog
+import linkletter.client.core.model.Post
 
 interface FetchBlogListUseCase {
-    operator fun invoke(): Flow<List<Blog>>
-} 
+    operator fun invoke(query: String): Flow<List<Post>>
+}

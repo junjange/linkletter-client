@@ -10,10 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
@@ -29,16 +25,14 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun FollowingFeedSearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
-    onSearch: (String) -> Unit,
 ) {
-    var query by rememberSaveable { mutableStateOf("") }
-
     TextField(
         value = query,
-        onValueChange = { query = it },
-        textStyle = LinkletterTheme.typography.titleMediumR.copy(color = LinkletterTheme.colorScheme.onSurface),
+        onValueChange = onQueryChange,
         placeholder = {
             Text(
                 text = stringResource(Res.string.hint_search),
@@ -49,16 +43,18 @@ internal fun FollowingFeedSearchBar(
             Icon(
                 painter = painterResource(Res.drawable.ic_search),
                 contentDescription = null,
-                tint = Color.Gray,
+                tint = LinkletterTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             )
         },
         trailingIcon = {
             if (query.isNotEmpty()) {
-                IconButton(onClick = { query = "" }) {
+                IconButton(onClick = {
+                    onQueryChange("")
+                }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_cancel),
                         contentDescription = null,
-                        tint = Color.Gray,
+                        tint = LinkletterTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     )
                 }
             }
@@ -67,10 +63,7 @@ internal fun FollowingFeedSearchBar(
         keyboardActions =
             KeyboardActions(
                 onDone = {
-                    if (query.isNotBlank()) {
-                        onSearch(query)
-                        focusManager.clearFocus()
-                    }
+                    focusManager.clearFocus()
                 },
             ),
         singleLine = true,

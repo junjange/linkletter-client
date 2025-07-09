@@ -47,6 +47,7 @@ fun FollowingFeedScreen(
     navigateToAddBlog: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val query by viewModel.query.collectAsStateWithLifecycle()
 
     val focusManager = LocalFocusManager.current
     val uriHandler = LocalUriHandler.current
@@ -64,6 +65,10 @@ fun FollowingFeedScreen(
     val firstVisibleItemScrollOffset =
         remember { derivedStateOf { lazyListState.firstVisibleItemScrollOffset } }
 
+    LaunchedEffect(firstVisibleItemScrollOffset.value) {
+        focusManager.clearFocus()
+    }
+
     Scaffold(
         containerColor = LinkletterTheme.colorScheme.background,
         modifier =
@@ -73,11 +78,12 @@ fun FollowingFeedScreen(
                 .padding(bottom = 80.dp),
         topBar = {
             FollowingFeedSearchBar(
+                query = query,
+                onQueryChange = { query ->
+                    viewModel.onEvent(FollowingFeedEvent.QueryChanged(query = query))
+                },
                 modifier = Modifier.padding(all = 16.dp),
                 focusManager = focusManager,
-                onSearch = { query ->
-                    // 검색 기능 미구현 부분
-                },
             )
         },
         floatingActionButton = {
@@ -95,7 +101,10 @@ fun FollowingFeedScreen(
                     .addFocusCleaner(focusManager),
             state = state,
             lazyListState = lazyListState,
-            onRefresh = { viewModel.onEvent(FollowingFeedEvent.FeedRefresh) },
+            onRefresh = {
+                viewModel.onEvent(FollowingFeedEvent.FeedRefresh)
+                focusManager.clearFocus()
+            },
             onPostClick = { link -> viewModel.onEvent(FollowingFeedEvent.PostClicked(link = link)) },
         )
     }

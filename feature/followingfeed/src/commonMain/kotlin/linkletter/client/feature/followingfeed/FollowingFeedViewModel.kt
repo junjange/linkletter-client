@@ -2,68 +2,106 @@ package linkletter.client.feature.followingfeed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import linkletter.client.core.common.formatRssDateToKorean
 import linkletter.client.core.domain.usecase.FetchBlogListUseCase
-import linkletter.client.core.model.Post
 import linkletter.client.feature.followingfeed.model.FollowingFeedEffect
 import linkletter.client.feature.followingfeed.model.FollowingFeedEvent
 import linkletter.client.feature.followingfeed.model.FollowingFeedState
+import linkletter.client.feature.followingfeed.model.Trigger
 
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class FollowingFeedViewModel(
     private val fetchBlogListUseCase: FetchBlogListUseCase,
 ) : ViewModel() {
-    private val _state = MutableStateFlow<FollowingFeedState>(FollowingFeedState.Loading)
-    val state = _state.asStateFlow()
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query
+
+    private val refresh = MutableSharedFlow<Unit>()
+
+    private val trigger: Flow<Trigger> =
+        merge(
+            _query
+                .debounce(300)
+                .distinctUntilChanged()
+                .map { Trigger.Search(it) },
+            refresh
+                .map { Trigger.Refresh },
+        )
+
+    private val postsFlow: Flow<FollowingFeedState> =
+        trigger
+            .flatMapLatest { trig ->
+                val queryForFetch =
+                    when (trig) {
+                        is Trigger.Search -> trig.query
+                        is Trigger.Refresh -> _query.value
+                    }
+
+                val baseFlow: Flow<FollowingFeedState> =
+                    fetchBlogListUseCase(queryForFetch)
+                        .map { list ->
+                            val posts =
+                                list
+                                    .map { it.copy(pubDate = it.pubDate.formatRssDateToKorean()) }
+                                    .sortedByDescending { it.pubDate }
+
+                            if (posts.isEmpty()) {
+                                FollowingFeedState.Empty
+                            } else {
+                                FollowingFeedState.Feed(posts)
+                            }
+                        }
+
+                if (trig is Trigger.Refresh) {
+                    baseFlow.onStart { emit(FollowingFeedState.Loading) }
+                } else {
+                    baseFlow
+                }
+            }.onStart { emit(FollowingFeedState.Loading) }
+            .catch { emit(FollowingFeedState.Empty) }
+
+    val state: StateFlow<FollowingFeedState> =
+        postsFlow
+            .stateIn(viewModelScope, SharingStarted.Lazily, FollowingFeedState.Loading)
 
     private val _effect = Channel<FollowingFeedEffect>(Channel.BUFFERED)
     val effect get() = _effect.receiveAsFlow()
 
-    init {
-        fetchFeed()
-    }
-
     fun onEvent(event: FollowingFeedEvent) {
         when (event) {
-            is FollowingFeedEvent.FeedRefresh -> fetchFeed()
-            is FollowingFeedEvent.PostClicked -> openUri(event.link)
+            is FollowingFeedEvent.FeedRefresh -> refresh()
+            is FollowingFeedEvent.PostClicked -> openUri(link = event.link)
             is FollowingFeedEvent.AddBlogClicked -> navigateToAddBlog()
+            is FollowingFeedEvent.QueryChanged -> onQueryChanged(newQuery = event.query)
         }
     }
 
-    private fun fetchFeed() {
-        fetchBlogListUseCase()
-            .onStart {
-                _state.value = FollowingFeedState.Loading
-                delay(300)
-            }.onEach { blogList ->
-                if (blogList.isEmpty()) {
-                    _state.value = FollowingFeedState.Empty
-                    return@onEach
-                }
-                val newPostList = mutableListOf<Post>()
-                blogList.map { blog ->
-                    newPostList +=
-                        blog.postList.map { post ->
-                            post.copy(pubDate = post.pubDate.formatRssDateToKorean())
-                        }
-                }
-                newPostList.sortBy { it.pubDate }
+    private fun refresh() {
+        viewModelScope.launch {
+            refresh.emit(Unit)
+        }
+    }
 
-                _state.value = FollowingFeedState.Feed(newPostList)
-            }.catch {
-                _state.value = FollowingFeedState.Empty
-                // TODO 에러
-            }.launchIn(viewModelScope)
+    private fun onQueryChanged(newQuery: String) {
+        _query.value = newQuery
     }
 
     private fun navigateToAddBlog() {
