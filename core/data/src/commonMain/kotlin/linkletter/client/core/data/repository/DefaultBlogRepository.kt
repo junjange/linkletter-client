@@ -1,9 +1,12 @@
 package linkletter.client.core.data.repository
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import linkletter.client.core.data.source.BlogInfoDataSource
 import linkletter.client.core.data.source.RssDataSource
@@ -28,15 +31,22 @@ internal class DefaultBlogRepository(
 
     override fun getAllBlogInfos(): Flow<List<BlogInfo>> = blogInfoDataSource.getAllBlogInfos()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun fetchBlogList(): Flow<List<Blog>> =
-        flow {
-            val blogInfos = getAllBlogInfos().first()
-            val blogList =
-                blogInfos.map { blogInfo ->
-                    fetchBlog(blogUrl = blogInfo.url).first()
+        getAllBlogInfos()
+            .flatMapLatest { blogInfos ->
+                if (blogInfos.isEmpty()) {
+                    flowOf(emptyList())
+                } else {
+                    val blogFlows: List<Flow<Blog>> =
+                        blogInfos.map { info ->
+                            fetchBlog(blogUrl = info.url)
+                        }
+                    combine(blogFlows) { blogArray ->
+                        blogArray.toList()
+                    }
                 }
-            emit(blogList)
-        }
+            }
 
     override fun fetchBlog(blogUrl: String): Flow<Blog> =
         flow {
