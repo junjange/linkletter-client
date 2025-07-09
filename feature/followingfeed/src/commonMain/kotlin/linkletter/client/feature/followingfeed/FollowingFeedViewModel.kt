@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import linkletter.client.core.common.formatRssDateToKorean
-import linkletter.client.core.domain.usecase.FetchBlogListUseCase
+import linkletter.client.core.domain.usecase.FetchPostListUseCase
 import linkletter.client.feature.followingfeed.model.FollowingFeedEffect
 import linkletter.client.feature.followingfeed.model.FollowingFeedEvent
 import linkletter.client.feature.followingfeed.model.FollowingFeedState
@@ -29,7 +29,7 @@ import linkletter.client.feature.followingfeed.model.Trigger
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class FollowingFeedViewModel(
-    private val fetchBlogListUseCase: FetchBlogListUseCase,
+    private val fetchPostListUseCase: FetchPostListUseCase,
 ) : ViewModel() {
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query
@@ -55,20 +55,7 @@ class FollowingFeedViewModel(
                         is Trigger.Refresh -> _query.value
                     }
 
-                val baseFlow: Flow<FollowingFeedState> =
-                    fetchBlogListUseCase(queryForFetch)
-                        .map { list ->
-                            val posts =
-                                list
-                                    .map { it.copy(pubDate = it.pubDate.formatRssDateToKorean()) }
-                                    .sortedByDescending { it.pubDate }
-
-                            if (posts.isEmpty()) {
-                                FollowingFeedState.Empty
-                            } else {
-                                FollowingFeedState.Feed(posts)
-                            }
-                        }
+                val baseFlow: Flow<FollowingFeedState> = loadPostList(queryForFetch)
 
                 if (trig is Trigger.Refresh) {
                     baseFlow.onStart { emit(FollowingFeedState.Loading) }
@@ -93,6 +80,21 @@ class FollowingFeedViewModel(
             is FollowingFeedEvent.QueryChanged -> onQueryChanged(newQuery = event.query)
         }
     }
+
+    private fun loadPostList(query: String): Flow<FollowingFeedState> =
+        fetchPostListUseCase(query)
+            .map { list ->
+                val posts =
+                    list
+                        .map { it.copy(pubDate = it.pubDate.formatRssDateToKorean()) }
+                        .sortedByDescending { it.pubDate }
+
+                if (posts.isEmpty()) {
+                    FollowingFeedState.Empty
+                } else {
+                    FollowingFeedState.Feed(posts)
+                }
+            }
 
     private fun refresh() {
         viewModelScope.launch {

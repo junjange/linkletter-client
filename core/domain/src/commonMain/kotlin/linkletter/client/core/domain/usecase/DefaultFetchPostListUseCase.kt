@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.map
 import linkletter.client.core.domain.repository.BlogRepository
 import linkletter.client.core.model.Post
 
-internal class DefaultFetchBlogListUseCase(
+internal class DefaultFetchPostListUseCase(
     private val repository: BlogRepository,
-) : FetchBlogListUseCase {
+) : FetchPostListUseCase {
     override fun invoke(query: String): Flow<List<Post>> =
         repository
             .fetchBlogList()
