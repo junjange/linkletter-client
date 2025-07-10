@@ -7,7 +7,7 @@ plugins {
     id("linkletter.client.convention.kotlin.serialization")
 }
 
-android.namespace = "linkletter.client.feature.main"
+android.namespace = "linkletter.client.feature.postarchive"
 
 kotlin {
     sourceSets {
@@ -15,19 +15,17 @@ kotlin {
             implementation(projects.core.ui)
             implementation(projects.core.common)
             implementation(projects.core.model)
-            implementation(projects.core.data)
+            implementation(projects.core.domain)
             implementation(projects.core.navigation)
-
-            implementation(projects.feature.postarchive)
-            implementation(projects.feature.followingfeed)
-            implementation(projects.feature.mybloggers)
-            implementation(projects.feature.addblog)
+            implementation(projects.core.designsystem)
 
             implementation(libs.navigation.compose)
 
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.coroutines.core)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
