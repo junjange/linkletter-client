@@ -37,6 +37,7 @@ kotlin {
             implementation(projects.core.network)
 
             implementation(projects.feature.main)
+            implementation(projects.feature.postarchive)
             implementation(projects.feature.followingfeed)
             implementation(projects.feature.mybloggers)
             implementation(projects.feature.addblog)

@@ -10,6 +10,7 @@ import linkletter.client.feature.addblog.di.featureAddBlogModule
 import linkletter.client.feature.followingfeed.di.featureFollowingFeedModule
 import linkletter.client.feature.main.MainScreen
 import linkletter.client.feature.mybloggers.di.featureMyBloggersModule
+import linkletter.client.feature.postarchive.di.featurePostArchiveModule
 import org.koin.core.KoinApplication
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -40,6 +41,7 @@ internal val appModule =
         )
 
         includes(
+            featurePostArchiveModule,
             featureFollowingFeedModule,
             featureMyBloggersModule,
             featureAddBlogModule,

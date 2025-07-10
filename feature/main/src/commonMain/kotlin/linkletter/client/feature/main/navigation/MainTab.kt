@@ -6,6 +6,7 @@ import linkletter.client.core.navigation.Route
 import linkletter_client.feature.main.generated.resources.Res
 import linkletter_client.feature.main.generated.resources.ic_following_feed
 import linkletter_client.feature.main.generated.resources.ic_groups
+import linkletter_client.feature.main.generated.resources.ic_post_archive
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class MainTab(
@@ -13,6 +14,11 @@ enum class MainTab(
     val contentDescription: String,
     val route: MainTabRoute,
 ) {
+    POST_ARCHIVE(
+        iconResId = Res.drawable.ic_post_archive,
+        contentDescription = "글 아카이브",
+        route = MainTabRoute.PostArchive,
+    ),
     FOLLOWING_FEED(
         iconResId = Res.drawable.ic_following_feed,
         contentDescription = "팔로잉 피드",

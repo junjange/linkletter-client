@@ -9,6 +9,9 @@ sealed interface Route {
 
 sealed interface MainTabRoute : Route {
     @Serializable
+    data object PostArchive : MainTabRoute
+
+    @Serializable
     data object FollowingFeed : MainTabRoute
 
     @Serializable

@@ -14,6 +14,7 @@ import linkletter.client.core.navigation.Route
 import linkletter.client.feature.addblog.navigation.navigateAddBlog
 import linkletter.client.feature.followingfeed.navigation.navigateFollowingFeed
 import linkletter.client.feature.mybloggers.navigation.navigateMyBloggers
+import linkletter.client.feature.postarchive.navigation.navigatePostArchive
 
 class MainNavigator(
     val navController: NavHostController,
@@ -44,6 +45,7 @@ class MainNavigator(
             }
 
         when (tab) {
+            MainTab.POST_ARCHIVE -> navController.navigatePostArchive(navOptions)
             MainTab.FOLLOWING_FEED -> navController.navigateFollowingFeed(navOptions)
             MainTab.MY_BLOGGERS -> navController.navigateMyBloggers(navOptions)
         }

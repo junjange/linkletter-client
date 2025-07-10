@@ -8,6 +8,7 @@ import linkletter.client.feature.addblog.navigation.addBlogNavGraph
 import linkletter.client.feature.followingfeed.navigation.followingFeedNavGraph
 import linkletter.client.feature.main.navigation.MainNavigator
 import linkletter.client.feature.mybloggers.navigation.myBloggersScreenNavGraph
+import linkletter.client.feature.postarchive.navigation.postArchiveNavGraph
 
 @Composable
 fun MainNavHost(
@@ -19,6 +20,9 @@ fun MainNavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
     ) {
+        postArchiveNavGraph(
+            navigateToAddBlog = navigator::navigateAddBlog,
+        )
         followingFeedNavGraph(
             navigateToAddBlog = navigator::navigateAddBlog,
         )
