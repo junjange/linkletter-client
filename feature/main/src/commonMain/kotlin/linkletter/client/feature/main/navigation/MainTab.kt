@@ -6,6 +6,7 @@ import linkletter.client.core.navigation.Route
 import linkletter_client.feature.main.generated.resources.Res
 import linkletter_client.feature.main.generated.resources.ic_following_feed
 import linkletter_client.feature.main.generated.resources.ic_groups
+import linkletter_client.feature.main.generated.resources.ic_settings
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class MainTab(
@@ -22,6 +23,12 @@ enum class MainTab(
         iconResId = Res.drawable.ic_groups,
         contentDescription = "내 블로거",
         route = MainTabRoute.MyBloggers,
+    ),
+
+    SETTING(
+        iconResId = Res.drawable.ic_settings,
+        contentDescription = "설정",
+        route = MainTabRoute.Setting,
     ),
     ;
 

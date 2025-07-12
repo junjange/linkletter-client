@@ -13,4 +13,7 @@ sealed interface MainTabRoute : Route {
 
     @Serializable
     data object MyBloggers : MainTabRoute
+
+    @Serializable
+    data object Setting : MainTabRoute
 }
