@@ -3,6 +3,7 @@ package linkletter.client
 import androidx.compose.runtime.Composable
 import linkletter.client.core.data.di.coreDataModule
 import linkletter.client.core.database.di.coreDatabaseModule
+import linkletter.client.core.datastore.di.coreDataStoreModule
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.domain.di.coreDomainModule
 import linkletter.client.core.network.di.coreNetworkModule
@@ -24,21 +25,11 @@ fun App() {
 
 internal val appModule =
     module {
-        includes(
-            coreNetworkModule,
-        )
-
-        includes(
-            coreDatabaseModule,
-        )
-
-        includes(
-            coreDataModule,
-        )
-
-        includes(
-            coreDomainModule,
-        )
+        includes(coreNetworkModule)
+        includes(coreDatabaseModule)
+        includes(coreDataStoreModule)
+        includes(coreDataModule)
+        includes(coreDomainModule)
 
         includes(
             featureFollowingFeedModule,

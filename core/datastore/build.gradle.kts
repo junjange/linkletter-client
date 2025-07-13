@@ -14,6 +14,7 @@ kotlin {
             api(projects.core.model)
 
             implementation(libs.kotlinx.datetime)
+            implementation(libs.koin.core)
         }
     }
 }
