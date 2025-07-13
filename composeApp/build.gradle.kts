@@ -29,17 +29,15 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.model)
-
             implementation(projects.core.data)
-
             implementation(projects.core.designsystem)
-
             implementation(projects.core.network)
 
             implementation(projects.feature.main)
             implementation(projects.feature.followingfeed)
             implementation(projects.feature.mybloggers)
             implementation(projects.feature.addblog)
+            implementation(projects.feature.setting)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)

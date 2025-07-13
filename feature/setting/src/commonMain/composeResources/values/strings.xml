@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">설정</string>
+    <string name="alarm_toggle_title">일간 새 글 알림</string>
+    <string name="alarm_toggle_description">매일 오전 8시에 팔로우한 블로그의 새 글을 모아 알려줍니다.</string>
+</resources>

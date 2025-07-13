@@ -2,14 +2,18 @@ package linkletter.client.core.domain.di
 
 import linkletter.client.core.domain.usecase.DefaultDeleteBlogInfoUseCase
 import linkletter.client.core.domain.usecase.DefaultFetchPostListUseCase
+import linkletter.client.core.domain.usecase.DefaultGetAlarmEnabledFlowUseCase
 import linkletter.client.core.domain.usecase.DefaultGetAllBlogInfosUseCase
 import linkletter.client.core.domain.usecase.DefaultGetBlogUseCase
 import linkletter.client.core.domain.usecase.DefaultInsertBlogInfoUseCase
+import linkletter.client.core.domain.usecase.DefaultSetAlarmEnabledUseCase
 import linkletter.client.core.domain.usecase.DeleteBlogInfoUseCase
 import linkletter.client.core.domain.usecase.FetchPostListUseCase
+import linkletter.client.core.domain.usecase.GetAlarmEnabledFlowUseCase
 import linkletter.client.core.domain.usecase.GetAllBlogInfosUseCase
 import linkletter.client.core.domain.usecase.GetBlogUseCase
 import linkletter.client.core.domain.usecase.InsertBlogInfoUseCase
+import linkletter.client.core.domain.usecase.SetAlarmEnabledUseCase
 import org.koin.dsl.module
 
 val coreDomainModule =
@@ -19,4 +23,6 @@ val coreDomainModule =
         single<FetchPostListUseCase> { (DefaultFetchPostListUseCase(get())) }
         single<GetAllBlogInfosUseCase> { (DefaultGetAllBlogInfosUseCase(get())) }
         single<InsertBlogInfoUseCase> { (DefaultInsertBlogInfoUseCase(get())) }
+        single<GetAlarmEnabledFlowUseCase> { (DefaultGetAlarmEnabledFlowUseCase(get())) }
+        single<SetAlarmEnabledUseCase> { (DefaultSetAlarmEnabledUseCase(get())) }
     }
