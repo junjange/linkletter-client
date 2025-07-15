@@ -38,6 +38,8 @@ twitterComposeRule = "0.0.26"
 
 ksoup = "0.2.4"
 
+moko = "0.18.1"
+
 [libraries]
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
@@ -86,6 +88,10 @@ spotlessGradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle"
 detektGradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detektFormatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 twitterComposeRule = { module = "com.twitter.compose.rules:detekt", version.ref = "twitterComposeRule" }
+
+# moko
+moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko" }
+moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
