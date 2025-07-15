@@ -3,4 +3,6 @@
     <string name="title">설정</string>
     <string name="alarm_toggle_title">일간 새 글 알림</string>
     <string name="alarm_toggle_description">매일 오전 8시에 팔로우한 블로그의 새 글을 모아 알려줍니다.</string>
+    <string name="snackbar_notification_permission_denied">알림 권한이 거부되었어요\n앱 설정에서 알림 권한을 허용해주세요</string>
+    <string name="snackbar_notification_permission_denied_action">설정</string>
 </resources>

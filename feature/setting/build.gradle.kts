@@ -27,6 +27,9 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.navigation)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(libs.moko.permissions)
+            implementation(libs.moko.permissions.compose)
         }
     }
 }
