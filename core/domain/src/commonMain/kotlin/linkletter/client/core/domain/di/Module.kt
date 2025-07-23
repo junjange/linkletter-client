@@ -1,5 +1,7 @@
 package linkletter.client.core.domain.di
 
+import linkletter.client.core.domain.usecase.CheckNewPostUseCase
+import linkletter.client.core.domain.usecase.DefaultCheckNewPostUseCase
 import linkletter.client.core.domain.usecase.DefaultDeleteBlogInfoUseCase
 import linkletter.client.core.domain.usecase.DefaultFetchPostListUseCase
 import linkletter.client.core.domain.usecase.DefaultFollowBlogUseCase
@@ -31,4 +33,5 @@ val coreDomainModule =
         single<SetAlarmEnabledUseCase> { (DefaultSetAlarmEnabledUseCase(get())) }
         single<LatestPostLinkUseCase> { (DefaultLatestPostLinkUseCase(get())) }
         single<SaveLatestPostLinkUseCase> { (DefaultSaveLatestPostLinkUseCase(get())) }
+        single<CheckNewPostUseCase> { DefaultCheckNewPostUseCase(get(), get(), get()) }
     }
