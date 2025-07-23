@@ -9,5 +9,7 @@ internal class DefaultAlarmSettingRepository(
 ) : AlarmSettingRepository {
     override val getAlarmEnabledFlow: Flow<Boolean> = source.getAlarmEnabledFlow
 
-    override suspend fun setAlarmEnabled(enabled: Boolean) = source.setAlarmEnabled(enabled = enabled)
+    override suspend fun setAlarmEnabled(enabled: Boolean) {
+        source.setAlarmEnabled(enabled = enabled)
+    }
 }

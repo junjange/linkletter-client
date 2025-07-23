@@ -30,7 +30,7 @@ val coreDomainModule =
         single<GetAllBlogInfosUseCase> { (DefaultGetAllBlogInfosUseCase(get())) }
         single<InsertBlogInfoUseCase> { (DefaultFollowBlogUseCase(get())) }
         single<GetAlarmEnabledFlowUseCase> { (DefaultGetAlarmEnabledFlowUseCase(get())) }
-        single<SetAlarmEnabledUseCase> { (DefaultSetAlarmEnabledUseCase(get())) }
+        single<SetAlarmEnabledUseCase> { (DefaultSetAlarmEnabledUseCase(get(), get())) }
         single<LatestPostLinkUseCase> { (DefaultLatestPostLinkUseCase(get())) }
         single<SaveLatestPostLinkUseCase> { (DefaultSaveLatestPostLinkUseCase(get())) }
         single<CheckNewPostUseCase> { DefaultCheckNewPostUseCase(get(), get(), get()) }
