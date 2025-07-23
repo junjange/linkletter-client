@@ -7,6 +7,7 @@ import linkletter.client.core.datastore.di.coreDataStoreModule
 import linkletter.client.core.designsystem.theme.LinkletterTheme
 import linkletter.client.core.domain.di.coreDomainModule
 import linkletter.client.core.network.di.coreNetworkModule
+import linkletter.client.core.notification.di.coreNotificationModule
 import linkletter.client.feature.addblog.di.featureAddBlogModule
 import linkletter.client.feature.followingfeed.di.featureFollowingFeedModule
 import linkletter.client.feature.main.MainScreen
@@ -25,11 +26,14 @@ fun App() {
 
 internal val appModule =
     module {
-        includes(coreNetworkModule)
-        includes(coreDatabaseModule)
-        includes(coreDataStoreModule)
-        includes(coreDataModule)
-        includes(coreDomainModule)
+        includes(
+            coreNetworkModule,
+            coreDatabaseModule,
+            coreDataStoreModule,
+            coreDataModule,
+            coreDomainModule,
+            coreNotificationModule,
+        )
 
         includes(
             featureFollowingFeedModule,

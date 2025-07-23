@@ -19,9 +19,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.permissions.DeniedAlwaysException
+import dev.icerock.moko.permissions.DeniedException
 import dev.icerock.moko.permissions.Permission
 import dev.icerock.moko.permissions.PermissionState
 import dev.icerock.moko.permissions.PermissionsController
+import dev.icerock.moko.permissions.RequestCanceledException
 import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.PermissionsControllerFactory
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
@@ -101,11 +104,10 @@ internal fun SettingScreen(
                         viewModel.onEvent(SettingEvent.AlarmToggle(false))
                         return@launch
                     }
-                    runCatching {
+                    try {
                         controller.providePermission(Permission.REMOTE_NOTIFICATION)
-                    }.onSuccess {
                         viewModel.onEvent(SettingEvent.AlarmToggle(true))
-                    }.onFailure {
+                    } catch (deniedAlways: DeniedAlwaysException) {
                         val result =
                             snackbarHostState.showSnackbar(
                                 message = notificationPermissionDenied,
@@ -116,6 +118,18 @@ internal fun SettingScreen(
                         if (result == SnackbarResult.ActionPerformed) {
                             controller.openAppSettings()
                         }
+                    } catch (denied: DeniedException) {
+                        snackbarHostState.showSnackbar(
+                            message = notificationPermissionDenied,
+                            duration = SnackbarDuration.Short,
+                        )
+                    } catch (e: RequestCanceledException) {
+                        viewModel.onEvent(SettingEvent.AlarmToggle(true))
+                    } catch (e: Throwable) {
+                        snackbarHostState.showSnackbar(
+                            message = "예상치 못한 오류가 발생했습니다",
+                            duration = SnackbarDuration.Short,
+                        )
                     }
                 }
             },
