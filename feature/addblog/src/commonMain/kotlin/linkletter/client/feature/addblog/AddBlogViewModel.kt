@@ -20,7 +20,6 @@ import linkletter.client.core.domain.usecase.DeleteBlogInfoUseCase
 import linkletter.client.core.domain.usecase.GetAllBlogInfosUseCase
 import linkletter.client.core.domain.usecase.GetBlogUseCase
 import linkletter.client.core.domain.usecase.InsertBlogInfoUseCase
-import linkletter.client.core.model.BlogInfo
 import linkletter.client.feature.addblog.model.AddBlogEffect
 import linkletter.client.feature.addblog.model.AddBlogEvent
 import linkletter.client.feature.addblog.model.AddBlogMessage
@@ -28,8 +27,8 @@ import linkletter.client.feature.addblog.model.AddBlogState
 import kotlin.collections.map
 
 class AddBlogViewModel(
+    getAllBlogInfosUseCase: GetAllBlogInfosUseCase,
     private val getBlogUseCase: GetBlogUseCase,
-    private val getAllBlogInfosUseCase: GetAllBlogInfosUseCase,
     private val insertBlogInfoUseCase: InsertBlogInfoUseCase,
     private val deleteBlogInfoUseCase: DeleteBlogInfoUseCase,
 ) : ViewModel() {
@@ -104,16 +103,9 @@ class AddBlogViewModel(
             if (state.value is AddBlogState.AddBlog) {
                 val currentState = state.value as AddBlogState.AddBlog
                 val newIsFollowed = !currentState.isFollowed
-                val blogInfo =
-                    BlogInfo(
-                        name = currentState.blog.name,
-                        author = currentState.blog.author,
-                        url = currentState.blog.url,
-                    )
-                val blogUrl = currentState.blog.url
 
                 if (newIsFollowed) {
-                    insertBlogInfoUseCase(blogInfo = blogInfo)
+                    insertBlogInfoUseCase(blog = currentState.blog)
 
                     _effect.send(
                         AddBlogEffect.ShowMessage(
@@ -123,6 +115,8 @@ class AddBlogViewModel(
                         ),
                     )
                 } else {
+                    val blogUrl = currentState.blog.url
+
                     deleteBlogInfoUseCase(blogUrl = blogUrl)
 
                     _effect.send(

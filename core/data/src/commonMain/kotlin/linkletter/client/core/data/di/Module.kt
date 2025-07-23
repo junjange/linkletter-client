@@ -28,7 +28,7 @@ val coreDataModule =
         single<LatestPostDataSource> { (DefaultLatestPostDataSource(get())) }
 
         // repository
-        single<BlogRepository> { DefaultBlogRepository(get(), get(), get()) }
+        single<BlogRepository> { DefaultBlogRepository(get(), get(), get(), get()) }
         single<AlarmSettingRepository> { DefaultAlarmSettingRepository(get()) }
         single<LatestPostRepository> { (DefaultLatestPostRepository(get())) }
     }

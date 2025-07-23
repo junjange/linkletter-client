@@ -2,10 +2,10 @@ package linkletter.client.core.domain.di
 
 import linkletter.client.core.domain.usecase.DefaultDeleteBlogInfoUseCase
 import linkletter.client.core.domain.usecase.DefaultFetchPostListUseCase
+import linkletter.client.core.domain.usecase.DefaultFollowBlogUseCase
 import linkletter.client.core.domain.usecase.DefaultGetAlarmEnabledFlowUseCase
 import linkletter.client.core.domain.usecase.DefaultGetAllBlogInfosUseCase
 import linkletter.client.core.domain.usecase.DefaultGetBlogUseCase
-import linkletter.client.core.domain.usecase.DefaultInsertBlogInfoUseCase
 import linkletter.client.core.domain.usecase.DefaultLatestPostLinkUseCase
 import linkletter.client.core.domain.usecase.DefaultSaveLatestPostLinkUseCase
 import linkletter.client.core.domain.usecase.DefaultSetAlarmEnabledUseCase
@@ -26,7 +26,7 @@ val coreDomainModule =
         single<DeleteBlogInfoUseCase> { (DefaultDeleteBlogInfoUseCase(get())) }
         single<FetchPostListUseCase> { (DefaultFetchPostListUseCase(get())) }
         single<GetAllBlogInfosUseCase> { (DefaultGetAllBlogInfosUseCase(get())) }
-        single<InsertBlogInfoUseCase> { (DefaultInsertBlogInfoUseCase(get())) }
+        single<InsertBlogInfoUseCase> { (DefaultFollowBlogUseCase(get())) }
         single<GetAlarmEnabledFlowUseCase> { (DefaultGetAlarmEnabledFlowUseCase(get())) }
         single<SetAlarmEnabledUseCase> { (DefaultSetAlarmEnabledUseCase(get())) }
         single<LatestPostLinkUseCase> { (DefaultLatestPostLinkUseCase(get())) }

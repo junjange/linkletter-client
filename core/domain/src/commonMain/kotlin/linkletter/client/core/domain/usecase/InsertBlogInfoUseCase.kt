@@ -1,7 +1,7 @@
 package linkletter.client.core.domain.usecase
 
-import linkletter.client.core.model.BlogInfo
+import linkletter.client.core.model.Blog
 
 interface InsertBlogInfoUseCase {
-    suspend operator fun invoke(blogInfo: BlogInfo)
-} 
+    suspend operator fun invoke(blog: Blog)
+}

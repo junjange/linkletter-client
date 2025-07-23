@@ -5,7 +5,7 @@ import linkletter.client.core.model.Blog
 import linkletter.client.core.model.BlogInfo
 
 interface BlogRepository {
-    suspend fun insertBlogInfo(blogInfo: BlogInfo)
+    suspend fun saveNewFollowedBlog(blog: Blog)
 
     suspend fun deleteBlogInfo(blogUrl: String)
 
