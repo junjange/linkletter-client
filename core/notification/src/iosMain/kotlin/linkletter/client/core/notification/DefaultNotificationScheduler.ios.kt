@@ -5,10 +5,15 @@ import platform.Foundation.NSDateComponents
 import platform.UserNotifications.UNCalendarNotificationTrigger
 import platform.UserNotifications.UNMutableNotificationContent
 import platform.UserNotifications.UNNotificationRequest
+import platform.UserNotifications.UNNotificationSound
 import platform.UserNotifications.UNUserNotificationCenter
 
 actual class DefaultNotificationScheduler : NotificationScheduler {
     private val center = UNUserNotificationCenter.currentNotificationCenter()
+
+    init {
+        center.delegate = NotificationDelegate()
+    }
 
     actual override suspend fun scheduleDailyNotification(id: String) {
         val comps =
@@ -22,11 +27,13 @@ actual class DefaultNotificationScheduler : NotificationScheduler {
             UNMutableNotificationContent().apply {
                 setTitle(NOTIFICATION_TITLE)
                 setBody(NOTIFICATION_BODY)
+                setSound(UNNotificationSound.defaultSound())
             }
 
-        val req = UNNotificationRequest.requestWithIdentifier(id, content, trigger)
+        val request = UNNotificationRequest.requestWithIdentifier(id, content, trigger)
+        val center = UNUserNotificationCenter.currentNotificationCenter()
 
-        center.addNotificationRequest(req, null)
+        center.addNotificationRequest(request, null)
     }
 
     actual override suspend fun cancelAllNotifications() {
