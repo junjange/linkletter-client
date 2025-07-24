@@ -8,7 +8,7 @@ compileSdk = "35"
 targetSdk = "35"
 minSdk = "24"
 
-kotlin = "2.1.21"
+kotlin = "2.2.0-RC"
 coroutines = "1.9.0"
 
 kotlinx-datetime = "0.6.1"
