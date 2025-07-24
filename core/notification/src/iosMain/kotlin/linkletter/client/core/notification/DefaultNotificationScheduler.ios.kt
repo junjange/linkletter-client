@@ -5,6 +5,7 @@ import platform.Foundation.NSDateComponents
 import platform.UserNotifications.UNCalendarNotificationTrigger
 import platform.UserNotifications.UNMutableNotificationContent
 import platform.UserNotifications.UNNotificationRequest
+import platform.UserNotifications.UNNotificationSound
 import platform.UserNotifications.UNUserNotificationCenter
 
 actual class DefaultNotificationScheduler : NotificationScheduler {
@@ -22,6 +23,7 @@ actual class DefaultNotificationScheduler : NotificationScheduler {
             UNMutableNotificationContent().apply {
                 setTitle(NOTIFICATION_TITLE)
                 setBody(NOTIFICATION_BODY)
+                setSound(UNNotificationSound.defaultSound())
             }
 
         val req = UNNotificationRequest.requestWithIdentifier(id, content, trigger)
