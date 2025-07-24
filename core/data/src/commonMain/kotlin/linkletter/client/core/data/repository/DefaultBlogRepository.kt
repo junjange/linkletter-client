@@ -12,6 +12,7 @@ import linkletter.client.core.data.source.BlogInfoDataSource
 import linkletter.client.core.data.source.RssDataSource
 import linkletter.client.core.data.source.RssUrlDataSource
 import linkletter.client.core.domain.repository.BlogRepository
+import linkletter.client.core.domain.repository.LatestPostRepository
 import linkletter.client.core.model.Blog
 import linkletter.client.core.model.BlogInfo
 import linkletter.client.core.model.BlogPlatform
@@ -20,9 +21,20 @@ internal class DefaultBlogRepository(
     private val rssDataSource: RssDataSource,
     private val rssUrlDataSource: RssUrlDataSource,
     private val blogInfoDataSource: BlogInfoDataSource,
+    private val latestPostRepository: LatestPostRepository,
 ) : BlogRepository {
-    override suspend fun insertBlogInfo(blogInfo: BlogInfo) {
+    override suspend fun saveNewFollowedBlog(blog: Blog) {
+        val blogInfo =
+            BlogInfo(
+                name = blog.name,
+                author = blog.author,
+                url = blog.url,
+            )
         blogInfoDataSource.insertBlogInfo(blogInfo = blogInfo)
+        latestPostRepository.saveLatestPostLink(
+            blogUrl = blog.url,
+            latestPostLink = blog.postList.first().link,
+        )
     }
 
     override suspend fun deleteBlogInfo(blogUrl: String) {

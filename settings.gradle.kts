@@ -42,6 +42,7 @@ include(":core:network")
 include(":core:datastore")
 include(":core:database")
 include(":core:navigation")
+include(":core:notification")
 
 include(":feature:main")
 include(":feature:followingfeed")
