@@ -1,80 +1,46 @@
 package linkletter.client.core.notification
 
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.datetime.LocalTime
+import linkletter.client.core.domain.repository.NotificationScheduler
 import platform.Foundation.NSDateComponents
-import platform.Foundation.NSLog
-import platform.UserNotifications.*
-import kotlin.coroutines.resume
-import kotlin.time.ExperimentalTime
+import platform.UserNotifications.UNCalendarNotificationTrigger
+import platform.UserNotifications.UNMutableNotificationContent
+import platform.UserNotifications.UNNotificationRequest
+import platform.UserNotifications.UNUserNotificationCenter
 
-actual class DefaultNotificationScheduler {
-    private val center: UNUserNotificationCenter =
-        UNUserNotificationCenter.currentNotificationCenter()
+actual class DefaultNotificationScheduler : NotificationScheduler {
+    private val center = UNUserNotificationCenter.currentNotificationCenter()
 
-    @OptIn(ExperimentalTime::class)
-    actual suspend fun scheduleDailyNotification(
-        time: LocalTime,
-        title: String,
-        message: String,
-        id: String,
-    ) {
+    actual override suspend fun scheduleDailyNotification(id: String) {
+        val comps =
+            NSDateComponents().apply {
+                hour = NOTIFICATION_HOUR
+                minute = NOTIFICATION_MINUTE
+            }
+        val trigger = UNCalendarNotificationTrigger.triggerWithDateMatchingComponents(comps, true)
+
         val content =
             UNMutableNotificationContent().apply {
-                this.title = title
-                this.body = message
-                this.sound = UNNotificationSound.defaultSound()
+                setTitle(NOTIFICATION_TITLE)
+                setBody(NOTIFICATION_BODY)
             }
 
-        val dateComponents =
-            NSDateComponents().apply {
-                hour = time.hour.toLong()
-                minute = time.minute.toLong()
-                second = time.second.toLong()
-            }
+        val req = UNNotificationRequest.requestWithIdentifier(id, content, trigger)
 
-        val trigger =
-            UNCalendarNotificationTrigger.triggerWithDateMatchingComponents(
-                dateComponents,
-                repeats = true,
-            )
-
-        val request =
-            UNNotificationRequest.requestWithIdentifier(
-                id,
-                content,
-                trigger,
-            )
-
-        center.addNotificationRequest(request) { error ->
-            if (error != null) {
-                NSLog("[NotificationScheduler] scheduling error: %{public}@", error)
-            }
-        }
+        center.addNotificationRequest(req, null)
     }
 
-    actual suspend fun cancelNotification(id: String) {
-        center.removePendingNotificationRequests(listOf(id))
-    }
-
-    actual suspend fun cancelAllNotifications() {
+    actual override suspend fun cancelAllNotifications() {
         center.removeAllPendingNotificationRequests()
+        center.removeAllDeliveredNotifications()
     }
 
-    actual suspend fun requestPermission(): Boolean =
-        suspendCancellableCoroutine { cont ->
-            center.requestAuthorizationWithOptions(
-                authorizationOptions =
-                    UNAuthorizationOptionAlert or
-                        UNAuthorizationOptionSound or
-                        UNAuthorizationOptionBadge,
-            ) { granted, error ->
-                if (error != null) {
-                    NSLog("[NotificationScheduler] permission error: %{public}@", error)
-                }
-                cont.resume(granted)
-            }
-        }
+    companion object {
+        private const val NOTIFICATION_HOUR = 8L
+        private const val NOTIFICATION_MINUTE = 0L
+
+        const val NOTIFICATION_TITLE = "새 글 확인"
+        private const val NOTIFICATION_BODY = "팔로우 중인 블로그에 새 글이 있는지 한 번 살펴보세요"
+    }
 }
 
-actual fun provideNotificationScheduler(): DefaultNotificationScheduler = DefaultNotificationScheduler()
+actual fun provideNotificationScheduler(): NotificationScheduler = DefaultNotificationScheduler()
